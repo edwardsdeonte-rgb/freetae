@@ -191,6 +191,14 @@ body.intro-done #siteContent{opacity:1;visibility:visible;transition:opacity 600
 .scroll-indicator:active{transform:translateX(-50%) translateY(1px) scale(.985)}
 .scroll-indicator:active svg{transform:translateY(.5px) scale(.985);filter:drop-shadow(0 8px 18px rgba(0,0,0,.70))}
 @media (max-height:520px){.scroll-indicator{display:none}}
+/* Music → Story endcap arrow */
+.music-endcap{max-width:1240px;margin:30px auto 0;display:flex;justify-content:flex-end;padding-right:6px}
+.music-story-arrow{display:inline-flex;align-items:center;gap:10px;padding:12px 14px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.10);color:rgba(255,255,255,.90);text-decoration:none;backdrop-filter:blur(8px);box-shadow:0 18px 55px rgba(0,0,0,.55);transition:transform .28s cubic-bezier(.22,1,.36,1),border-color .28s ease,background .28s ease}
+.music-story-label{font-family:Oswald,sans-serif;letter-spacing:1.6px;text-transform:uppercase;font-weight:800;font-size:12px;opacity:.85}
+.music-story-arrow:hover{transform:translateY(-2px);border-color:rgba(255,215,0,.22);background:rgba(255,255,255,.05)}
+.music-story-arrow:active{transform:translateY(1px) scale(.99)}
+@media (max-width:520px){.music-endcap{padding-right:2px}.music-story-arrow{padding:12px 12px}}
+
 .js-sl-cta[disabled],.js-sl-cta[aria-disabled="true"]{opacity:.85;filter:saturate(.9);cursor:default}
 @media (max-width:420px){.sl-countdown .countdown-inline{font-size:11px}.sl-countdown .cd-num{font-size:11px}}
 .pill.out-now{background:rgba(255,211,0,.95) !important;color:rgba(0,0,0,.86) !important;box-shadow:0 10px 30px rgba(255,122,24,.22) !important}
@@ -488,6 +496,78 @@ body::after{
   .btn::before{transition:none}
 }
 
+
+/* ===== End-of-Music Arrow: subtle bounce + micro luxury glow ===== */
+#musicEndArrow {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 999px;
+  background: rgba(18,18,22,.88);
+  border: 1px solid rgba(255,255,255,.12);
+  color: #fff;
+  font-family: Oswald, sans-serif;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-size: 12px;
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 16px 40px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.05);
+  opacity: 0;
+  transform: translateY(10px) scale(.96);
+  transition:
+    opacity .6s cubic-bezier(.22,1,.36,1),
+    transform .6s cubic-bezier(.22,1,.36,1),
+    box-shadow .4s ease,
+    border-color .4s ease;
+}
+
+#musicEndArrow.in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: arrowBounce 2.4s ease-in-out infinite;
+}
+
+@keyframes arrowBounce {
+  0%,100% { transform: translateY(0) }
+  50% { transform: translateY(6px) }
+}
+
+/* Micro luxury glow */
+#musicEndArrow::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(120px 60px at 30% 20%, rgba(255,255,255,.12), transparent 60%),
+    radial-gradient(140px 80px at 70% 90%, rgba(255,215,0,.10), transparent 65%);
+  opacity: .55;
+  transition: opacity .35s ease;
+}
+
+#musicEndArrow:hover {
+  border-color: rgba(255,211,0,.28);
+  box-shadow:
+    0 22px 60px rgba(0,0,0,.65),
+    0 0 18px rgba(255,122,24,.18),
+    inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+#musicEndArrow:active {
+  transform: translateY(1px) scale(.96);
+  box-shadow:
+    0 10px 26px rgba(0,0,0,.75),
+    inset 0 12px 24px rgba(0,0,0,.78),
+    inset 0 -2px 6px rgba(255,215,0,.12);
+}
+
 </style>
 <meta content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" name="googlebot"/>
 <meta content="https://www.freetae.com/assets/freetae-seo-og.jpg" property="og:image:secure_url"/>
@@ -672,6 +752,18 @@ body::after{
 </div>
 </article>
 </div>
+
+
+<!-- Music → Story jump (end of MUSIC section) -->
+<div class="music-endcap fade-on-scroll">
+  <a class="music-story-arrow" href="#story" aria-label="Jump to Story section">
+    <span class="music-story-label">Story</span>
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M12 5v14m0 0 6-6m-6 6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</div>
+
 </section>
 <section aria-labelledby="story-title" class="story fade-on-scroll" id="story">
 <div class="section-header">
