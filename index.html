@@ -998,60 +998,55 @@ wordWrap.style.setProperty('--intro-scale',String(Math.min(1,avail/w)));
 var failTimer;
 function finish(){
 try{clearTimeout(failTimer);}catch(e){}
-overlay.style.transition='opacity 700ms cubic-bezier(.22,1,.36,1)';
+overlay.style.transition='opacity 500ms cubic-bezier(.22,1,.36,1)';
 overlay.style.opacity='0';
 document.body.classList.add('intro-done');
 document.body.classList.remove('has-intro');
 unlock();
-setTimeout(function(){overlay.remove();},800);
+setTimeout(function(){overlay.remove();},600);
 }
-failTimer=setTimeout(finish,9000);
+failTimer=setTimeout(finish,7000);
 if(prefersReduced){finish();return;}
 lock();fitText();
 window.addEventListener('resize',fitText,{passive:true});
 tagline.style.opacity='0';
 tagline.style.transform='translateY(6px)';
 tagline.textContent='';
-var setText=function(s){
-textEl.textContent=s;
-fitText();
-};
+var setText=function(s){textEl.textContent=s;fitText();};
 (async function(){
-/* Phase 1: Show FREETAE */
+/* FREETAE — hold briefly */
 setText('FREETAE');
-await sleep(1000);
-/* Phase 2: Erase from left, letter by letter — smooth pace */
+await sleep(800);
+/* Erase left letters: F R E E at 70ms each */
 var full='FREETAE';
 for(var k=1;k<=4;k++){
 setText(full.slice(k));
-await sleep(75);
+await sleep(70);
 }
-/* Phase 3: TAE holds with golden flash */
+/* TAE — flash and hold */
 setText('TAE');
 textEl.classList.remove('tae-flash');
 void textEl.offsetWidth;
 textEl.classList.add('tae-flash');
-await sleep(700);
-/* Phase 4: Erase TAE letter by letter */
-for(var i=2;i>=0;i--){
-setText('TAE'.slice(0,i));
-await sleep(70);
-}
-await sleep(200);
-/* Phase 5: Type TRIAL AND ERROR letter by letter — smooth pace */
+await sleep(550);
+/* TAE fades out */
+textEl.style.transition='opacity 280ms ease';
+textEl.style.opacity='0';
+await sleep(300);
+/* Type TRIAL AND ERROR */
+textEl.style.transition='none';
+textEl.style.opacity='1';
 var phrase='TRIAL AND ERROR';
 for(var j=1;j<=phrase.length;j++){
 setText(phrase.slice(0,j));
-await sleep(55);
+await sleep(50);
 }
-await sleep(400);
-/* Phase 6: Tagline fades in — smaller and subtle */
-tagline.style.transition='opacity 800ms cubic-bezier(.22,1,.36,1), transform 800ms cubic-bezier(.22,1,.36,1)';
+/* Tagline fades in — small and subtle */
+tagline.style.transition='opacity 600ms cubic-bezier(.22,1,.36,1), transform 600ms cubic-bezier(.22,1,.36,1)';
 tagline.textContent='THE MOVEMENT';
 tagline.style.opacity='0.6';
 tagline.style.transform='translateY(0)';
-await sleep(1400);
-/* Phase 7: Smooth exit */
+await sleep(900);
 finish();
 })();
 var skip=function(){finish();};
