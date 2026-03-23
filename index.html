@@ -82,7 +82,8 @@ html.intro-lock,html.intro-lock body{overflow:hidden}
 .hero-support{margin-top:14px;font-size:12px;color:rgba(255,255,255,.25);letter-spacing:.5px;line-height:1.6;opacity:0;animation:heroFadeIn 1s ease .8s forwards}
 @keyframes heroFadeIn{to{opacity:1}}
 .hero-arrow{position:absolute;bottom:max(24px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.3);animation:hFloat 2s ease-in-out infinite}
-.hero-arrow-text{font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.hero-arrow-text{font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);opacity:0;animation:hintFadeIn 1s ease 2.5s forwards}
+@keyframes hintFadeIn{to{opacity:1}}
 @keyframes hFloat{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 
 /* ═══ BUTTONS ═══ */
@@ -266,7 +267,7 @@ body.intro-done #site{opacity:1;visibility:visible;transition:opacity .6s cubic-
 </div>
 <div class="hero-support">Self-funded. Self-owned.<br>Powered by listeners, not labels.</div>
 </div>
-<button class="hero-arrow" aria-label="Scroll down" type="button"><span class="hero-arrow-text">Scroll Down</span><svg width="32" height="20" viewBox="0 0 34 20" fill="none"><path d="M3 3L17 17L31 3" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<button class="hero-arrow" aria-label="Scroll down" type="button"><span class="hero-arrow-text" data-desktop="Scroll Down" data-mobile="Swipe Down">Scroll Down</span><svg width="32" height="20" viewBox="0 0 34 20" fill="none"><path d="M3 3L17 17L31 3" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 </header>
 
 <div class="divider"></div>
@@ -371,7 +372,7 @@ var SE=(function(){var cbs=new Set,ticking=false;function run(){ticking=false;va
 /* ═══ HERO ARROW ═══ */
 (function(){var content=document.querySelector('.hero-content');var canvas=document.getElementById('heroCanvas');var hero=document.querySelector('.hero');if(!content||!hero)return;var hH=hero.offsetHeight;SE.add(function(y){if(y>hH)return;var r=y/hH;content.style.transform='translateY('+Math.round(y*.12)+'px)';content.style.opacity=String(Math.max(0,1-r*1.2));if(canvas)canvas.style.transform='translateY('+Math.round(y*.06)+'px)'})})();
 (function(){SE.add(function(y){var max=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);document.body.style.setProperty('--amb',String((y/max*30).toFixed(1)))})})();
-(function(){var btn=document.querySelector('.hero-arrow');var tgt=document.getElementById('music');if(btn&&tgt)btn.addEventListener('click',function(){tgt.scrollIntoView({behavior:'smooth'})})})();
+(function(){var btn=document.querySelector('.hero-arrow');var tgt=document.getElementById('music');if(btn&&tgt)btn.addEventListener('click',function(){tgt.scrollIntoView({behavior:'smooth'})});var hint=document.querySelector('.hero-arrow-text');if(hint){var isMobile='ontouchstart' in window||navigator.maxTouchPoints>0;hint.textContent=isMobile?hint.dataset.mobile:hint.dataset.desktop}})();
 
 /* ═══ CANVAS WAVEFORMS ═══ */
 (function(){var c=document.getElementById('heroCanvas');if(!c)return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches){c.style.display='none';return}var ctx=c.getContext('2d'),w,h,aid=0;var waves=[];for(var i=0;i<5;i++)waves.push({a:14+Math.random()*30,f:.005+Math.random()*.009,s:.006+Math.random()*.01,p:Math.random()*Math.PI*2,y:.32+Math.random()*.36,c:i%2===0?'rgba(255,107,0,'+(0.08+i*.025).toFixed(3)+')':'rgba(212,168,67,'+(0.05+i*.02).toFixed(3)+')'});function resize(){var d=Math.min(devicePixelRatio||1,2);var r=c.parentElement.getBoundingClientRect();w=r.width;h=r.height;c.width=w*d;c.height=h*d;c.style.width=w+'px';c.style.height=h+'px';ctx.setTransform(d,0,0,d,0,0)}function draw(t){ctx.clearRect(0,0,w,h);for(var i=0;i<waves.length;i++){var wv=waves[i];wv.p+=wv.s;ctx.beginPath();ctx.moveTo(0,h*wv.y);for(var x=0;x<=w;x+=3)ctx.lineTo(x,h*wv.y+Math.sin(x*wv.f+wv.p)*wv.a+Math.sin(x*wv.f*.5+wv.p*1.4)*(wv.a*.3));ctx.strokeStyle=wv.c;ctx.lineWidth=1.2;ctx.stroke()}var pulse=Math.sin(t*.0008)*.5+.5;var g=ctx.createRadialGradient(w*.5,h*.4,0,w*.5,h*.4,w*.35);g.addColorStop(0,'rgba(255,107,0,'+(0.035*pulse).toFixed(4)+')');g.addColorStop(1,'rgba(255,107,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);aid=requestAnimationFrame(draw)}resize();window.addEventListener('resize',resize,{passive:true});var io=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){if(!aid)aid=requestAnimationFrame(draw)}else{if(aid){cancelAnimationFrame(aid);aid=0}}})},{threshold:.05});var hero=c.closest('.hero');if(hero)io.observe(hero);else aid=requestAnimationFrame(draw)})();
