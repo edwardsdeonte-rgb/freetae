@@ -133,7 +133,7 @@ html.intro-lock,html.intro-lock body{overflow:hidden}
 #introWord.is-abs{}
 #introWord.is-abs .tae{position:absolute;left:50%;transform:translateX(-50%)}
 #introWord.is-abs .free{position:absolute;top:0;will-change:transform,opacity}
-#introTagline{margin-top:14px;font-family:'Staatliches',sans-serif;font-size:clamp(22px,4vw,32px);letter-spacing:4px;text-transform:uppercase;color:var(--gold);opacity:0;transform:translateY(8px);user-select:none;white-space:nowrap}
+#introTagline{margin-top:16px;font-family:'Staatliches',sans-serif;font-size:clamp(14px,2.6vw,20px);letter-spacing:6px;text-transform:uppercase;color:rgba(255,215,0,.55);opacity:0;transform:translateY(6px);user-select:none;white-space:nowrap;font-weight:400}
 @media (max-width:420px){#introWord{font-size:clamp(44px,12vw,92px);letter-spacing:clamp(2px,1.2vw,10px)}#introOverlay .intro-inner{padding:20px 12px}}
 #introOverlay.fade-out{animation:introFadeOut 520ms cubic-bezier(.22,1,.36,1) forwards}
 @keyframes introFadeOut{to{opacity:0;visibility:hidden}}
@@ -998,51 +998,60 @@ wordWrap.style.setProperty('--intro-scale',String(Math.min(1,avail/w)));
 var failTimer;
 function finish(){
 try{clearTimeout(failTimer);}catch(e){}
-overlay.style.transition='opacity 800ms cubic-bezier(.22,1,.36,1)';
+overlay.style.transition='opacity 700ms cubic-bezier(.22,1,.36,1)';
 overlay.style.opacity='0';
 document.body.classList.add('intro-done');
 document.body.classList.remove('has-intro');
 unlock();
-setTimeout(function(){overlay.remove();},900);
+setTimeout(function(){overlay.remove();},800);
 }
-failTimer=setTimeout(finish,8000);
+failTimer=setTimeout(finish,9000);
 if(prefersReduced){finish();return;}
 lock();fitText();
 window.addEventListener('resize',fitText,{passive:true});
 tagline.style.opacity='0';
-tagline.style.transform='translateY(12px)';
+tagline.style.transform='translateY(6px)';
 tagline.textContent='';
-textEl.style.transition='opacity 300ms ease, transform 300ms ease';
+var setText=function(s){
+textEl.textContent=s;
+fitText();
+};
 (async function(){
-textEl.textContent='FREETAE';fitText();
-textEl.style.opacity='1';
-await sleep(1200);
-textEl.style.opacity='0';
-textEl.style.transform='scale(0.95)';
-await sleep(350);
-textEl.textContent='TAE';fitText();
-textEl.style.transition='opacity 400ms ease, transform 400ms ease, color 400ms ease';
-textEl.style.opacity='1';
-textEl.style.transform='scale(1.05)';
-textEl.style.color='var(--gold)';
-await sleep(600);
-textEl.style.transform='scale(1)';
-textEl.style.color='';
-await sleep(400);
-textEl.style.opacity='0';
-textEl.style.transform='scale(0.95)';
-await sleep(350);
+/* Phase 1: Show FREETAE */
+setText('FREETAE');
+await sleep(1000);
+/* Phase 2: Erase from left, letter by letter — smooth pace */
+var full='FREETAE';
+for(var k=1;k<=4;k++){
+setText(full.slice(k));
+await sleep(75);
+}
+/* Phase 3: TAE holds with golden flash */
+setText('TAE');
+textEl.classList.remove('tae-flash');
+void textEl.offsetWidth;
+textEl.classList.add('tae-flash');
+await sleep(700);
+/* Phase 4: Erase TAE letter by letter */
+for(var i=2;i>=0;i--){
+setText('TAE'.slice(0,i));
+await sleep(70);
+}
+await sleep(200);
+/* Phase 5: Type TRIAL AND ERROR letter by letter — smooth pace */
 var phrase='TRIAL AND ERROR';
-textEl.textContent=phrase;fitText();
-textEl.style.transition='opacity 600ms cubic-bezier(.22,1,.36,1), transform 600ms cubic-bezier(.22,1,.36,1)';
-textEl.style.opacity='1';
-textEl.style.transform='scale(1)';
-await sleep(300);
-tagline.style.transition='opacity 700ms cubic-bezier(.22,1,.36,1), transform 700ms cubic-bezier(.22,1,.36,1)';
+for(var j=1;j<=phrase.length;j++){
+setText(phrase.slice(0,j));
+await sleep(55);
+}
+await sleep(400);
+/* Phase 6: Tagline fades in — smaller and subtle */
+tagline.style.transition='opacity 800ms cubic-bezier(.22,1,.36,1), transform 800ms cubic-bezier(.22,1,.36,1)';
 tagline.textContent='THE MOVEMENT';
-tagline.style.opacity='1';
+tagline.style.opacity='0.6';
 tagline.style.transform='translateY(0)';
-await sleep(1200);
+await sleep(1400);
+/* Phase 7: Smooth exit */
 finish();
 })();
 var skip=function(){finish();};
