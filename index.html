@@ -75,7 +75,7 @@ footer strong{color:var(--primary);font-family:Oswald,sans-serif;letter-spacing:
 .panel{width:min(560px,100%);border-radius:22px;background:rgba(18,18,18,.92);border:1px solid rgba(255,255,255,.10);box-shadow:0 30px 90px rgba(0,0,0,.65);position:relative;overflow:hidden;transform:translateY(10px);opacity:0;animation:panelIn .32s cubic-bezier(.16,1,.3,1) forwards}
 @keyframes panelIn{to{transform:none;opacity:1}}
 .panel-head{padding:18px 18px 10px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;min-width:0}.panel-head>div:first-child{min-width:0;flex:1}
-.panel-title{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";letter-spacing:2px;font-size:clamp(22px,6vw,34px);color:var(--primary);line-height:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.panel-title{font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";letter-spacing:1.5px;font-size:clamp(20px,5.5vw,34px);color:var(--primary);line-height:1.15;word-break:break-word;min-width:0}
 .panel-sub{color:var(--muted);margin-top:6px;font-size:14px}
 .close{width:42px;height:42px;border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.25);color:rgba(255,255,255,.85);cursor:pointer;font-size:22px;line-height:1;transition:transform .2s ease,border-color .2s ease}
 .close:hover{transform:rotate(90deg);border-color:rgba(255,107,0,.45)}
@@ -83,7 +83,7 @@ footer strong{color:var(--primary);font-family:Oswald,sans-serif;letter-spacing:
 .linklist{display:flex;flex-direction:column;gap:12px;margin-top:10px}
 .support-note{color:rgba(255,255,255,.88);background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.08);padding:14px;border-radius:16px;margin-top:10px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.page,.logo,body::before,.hero::after,.cd-colon{animation:none !important}.parallax{transform:none !important}}
-@media (max-width:520px){section{padding:78px 16px}.social{width:68px;height:68px}.panel-title{font-size:30px}}
+@media (max-width:520px){section{padding:78px 16px}.social{width:68px;height:68px}.panel-title{font-size:clamp(18px,5vw,30px)}}
 .card .cover{aspect-ratio:1/1;width:100%;height:auto;object-fit:cover;background:#101015}
 @media (max-width:520px){.card{padding-top:10px}.card .cover{border-radius:22px}}
 .btn-stripe:before{content:"";width:14px;height:14px;border-radius:4px;background:linear-gradient(135deg,#635BFF,#00D4FF);box-shadow:0 0 18px rgba(99,91,255,.35)}
