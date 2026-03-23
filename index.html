@@ -81,7 +81,8 @@ html.intro-lock,html.intro-lock body{overflow:hidden}
 .hero-cta{margin-top:36px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .hero-support{margin-top:14px;font-size:12px;color:rgba(255,255,255,.25);letter-spacing:.5px;line-height:1.6;opacity:0;animation:heroFadeIn 1s ease .8s forwards}
 @keyframes heroFadeIn{to{opacity:1}}
-.hero-arrow{position:absolute;bottom:max(24px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);color:rgba(255,255,255,.3);animation:hFloat 2s ease-in-out infinite}
+.hero-arrow{position:absolute;bottom:max(24px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.3);animation:hFloat 2s ease-in-out infinite}
+.hero-arrow-text{font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3)}
 @keyframes hFloat{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 
 /* ═══ BUTTONS ═══ */
@@ -226,7 +227,7 @@ footer strong{color:var(--primary);font-weight:600;animation:footerGlow 3s ease-
 .reveal.in{opacity:1;transform:none}
 
 /* ═══ RESPONSIVE ═══ */
-@media(max-width:520px){
+@media(max-width:520px){.hero-arrow-text{font-size:8px;letter-spacing:2.5px}
   section{padding:72px 18px}
   .btn{padding:12px 22px;font-size:12px}
   .social{width:64px;height:64px;border-radius:16px}
@@ -265,7 +266,7 @@ body.intro-done #site{opacity:1;visibility:visible;transition:opacity .6s cubic-
 </div>
 <div class="hero-support">Self-funded. Self-owned.<br>Powered by listeners, not labels.</div>
 </div>
-<button class="hero-arrow" aria-label="Scroll down" type="button"><svg width="32" height="20" viewBox="0 0 34 20" fill="none"><path d="M3 3L17 17L31 3" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<button class="hero-arrow" aria-label="Scroll down" type="button"><span class="hero-arrow-text">Scroll Down</span><svg width="32" height="20" viewBox="0 0 34 20" fill="none"><path d="M3 3L17 17L31 3" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 </header>
 
 <div class="divider"></div>
