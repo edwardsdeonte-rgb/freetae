@@ -62,98 +62,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;o
 .nav a::after{content:'';position:absolute;bottom:2px;left:50%;width:0;height:1.5px;background:var(--gold);border-radius:2px;transform:translateX(-50%);transition:width .3s var(--ease)}
 .nav a.on::after{width:60%}
 
-/* ═══ VAULT ═══ */
-(function(){
-var CODE='FREETAE';/* <-- change this to set the secret code */
-var LEN=CODE.length;
-var wrap=document.getElementById('vaultInputWrap');
-var input=document.getElementById('vaultInput');
-var submitBtn=document.getElementById('vaultSubmit');
-var msg=document.getElementById('vaultMsg');
-var reveal=document.getElementById('vaultReveal');
-var section=document.getElementById('vault');
-if(!wrap||!input)return;
-
-/* build character boxes */
-for(var i=0;i<LEN;i++){
-var d=document.createElement('div');
-d.className='vault-char';
-d.dataset.idx=String(i);
-wrap.appendChild(d);
-}
-var chars=wrap.querySelectorAll('.vault-char');
-
-/* focus input on tap */
-wrap.addEventListener('click',function(){input.focus()});
-chars.forEach(function(c){c.addEventListener('click',function(){input.focus()})});
-
-input.setAttribute('maxlength',String(LEN));
-
-input.addEventListener('input',function(){
-var val=input.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,LEN);
-input.value=val;
-chars.forEach(function(c,i){
-c.textContent=val[i]||'';
-c.classList.toggle('filled',!!val[i]);
-c.classList.toggle('active',i===val.length);
-});
-msg.textContent='';msg.className='vault-msg';
-});
-
-input.addEventListener('keydown',function(e){
-if(e.key==='Enter')tryUnlock();
-});
-
-if(submitBtn)submitBtn.addEventListener('click',tryUnlock);
-
-function tryUnlock(){
-var val=input.value.toUpperCase();
-if(val.length<LEN){
-msg.textContent='Enter all '+LEN+' characters';
-msg.className='vault-msg denied';
-/* re-trigger shake */
-msg.style.animation='none';void msg.offsetWidth;msg.style.animation='';
-return;
-}
-if(val===CODE.toUpperCase()){
-msg.textContent='Unlocked';
-msg.className='vault-msg granted';
-if(section)section.classList.add('vault-unlocked');
-/* swap lock icon to unlocked */
-var lockEl=document.querySelector('.vault-lock');
-if(lockEl)lockEl.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 5-5 5 5 0 0 1 5 5"/></svg>';
-/* disable input */
-input.disabled=true;
-if(submitBtn)submitBtn.style.display='none';
-/* save to session */
-try{sessionStorage.setItem('vault','1')}catch(e){}
-}else{
-msg.textContent='Access denied';
-msg.className='vault-msg denied';
-msg.style.animation='none';void msg.offsetWidth;msg.style.animation='';
-/* shake the input boxes */
-wrap.style.animation='vaultShake .5s ease';
-setTimeout(function(){wrap.style.animation=''},600);
-/* clear after delay */
-setTimeout(function(){
-input.value='';
-chars.forEach(function(c){c.textContent='';c.classList.remove('filled','active')});
-chars[0].classList.add('active');
-},800);
-}
-}
-
-/* restore if already unlocked this session */
-try{if(sessionStorage.getItem('vault')==='1'){
-input.value=CODE;
-chars.forEach(function(c,i){c.textContent=CODE[i]||'';c.classList.add('filled')});
-msg.textContent='Unlocked';msg.className='vault-msg granted';
-if(section)section.classList.add('vault-unlocked');
-var lockEl2=document.querySelector('.vault-lock');
-if(lockEl2)lockEl2.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 5-5 5 5 0 0 1 5 5"/></svg>';
-input.disabled=true;if(submitBtn)submitBtn.style.display='none';
-}}catch(e){}
-})();
 
 /* ═══ TIMELINE DRAG SCROLL ═══ */
 (function(){var t=document.getElementById('tlTrack');if(!t)return;var down=false,startX=0,scrollL=0;t.addEventListener('mousedown',function(e){down=true;t.classList.add('grabbing');startX=e.pageX-t.offsetLeft;scrollL=t.scrollLeft});t.addEventListener('mouseleave',function(){down=false;t.classList.remove('grabbing')});t.addEventListener('mouseup',function(){down=false;t.classList.remove('grabbing')});t.addEventListener('mousemove',function(e){if(!down)return;e.preventDefault();var x=e.pageX-t.offsetLeft;t.scrollLeft=scrollL-(x-startX)*1.5})})();
@@ -376,11 +284,11 @@ section{padding:90px 24px}
 .vault-notch:nth-child(3){transform:translateX(-50%) rotate(180deg);top:auto;bottom:4px}
 .vault-notch:nth-child(4){transform:translateX(-50%) rotate(270deg);top:50%;left:auto;right:4px}
 .vault-prompt{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:20px}
-.vault-input-wrap{display:flex;justify-content:center;gap:8px;margin-bottom:16px}
+.vault-input-wrap{display:flex;justify-content:center;gap:8px;margin-bottom:16px;direction:ltr}
 .vault-char{width:44px;height:56px;border-radius:10px;background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:22px;font-weight:600;color:var(--gold);letter-spacing:2px;text-transform:uppercase;transition:border-color .3s,background .3s,transform .2s}
 .vault-char.active{border-color:rgba(255,107,0,.4);background:rgba(255,107,0,.05)}
 .vault-char.filled{border-color:rgba(255,215,0,.3);text-shadow:0 0 8px rgba(255,215,0,.2)}
-.vault-hidden-input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.vault-hidden-input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;direction:ltr;text-align:left;unicode-bidi:plaintext}
 .vault-submit{padding:12px 32px;border-radius:99px;font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.5);transition:all .3s cubic-bezier(.16,1,.3,1);margin-bottom:16px}
 .vault-submit:hover{background:rgba(255,107,0,.08);border-color:rgba(255,107,0,.3);color:var(--primary)}
 .vault-msg{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;min-height:20px;transition:all .3s}
@@ -625,7 +533,7 @@ body.intro-done #site{opacity:1;visibility:visible;transition:opacity .8s cubic-
 </div>
 <div class="vault-prompt">Enter access code</div>
 <div class="vault-input-wrap" id="vaultInputWrap"></div>
-<input class="vault-hidden-input" id="vaultInput" type="text" maxlength="6" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false">
+<input class="vault-hidden-input" id="vaultInput" type="text" maxlength="7" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" inputmode="text">
 <button class="vault-submit" id="vaultSubmit" type="button">Unlock</button>
 <div class="vault-msg" id="vaultMsg"></div>
 <div class="vault-hint">Clues drop on <a href="https://instagram.com/deonteedwards" target="_blank" rel="noopener noreferrer">Instagram</a> &#8212; follow for the code.</div>
