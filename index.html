@@ -700,94 +700,96 @@ try{var sp=new URLSearchParams(location.search);if(sp.get('support')==='success'
 
 /* ═══ VAULT ═══ */
 (function(){
-var CODE='FREETAE';/* <-- change this to set the secret code */
+var CODE='FREETAE';
 var LEN=CODE.length;
 var wrap=document.getElementById('vaultInputWrap');
 var input=document.getElementById('vaultInput');
 var submitBtn=document.getElementById('vaultSubmit');
 var msg=document.getElementById('vaultMsg');
-var reveal=document.getElementById('vaultReveal');
 var section=document.getElementById('vault');
-if(!wrap||!input)return;
+if(!wrap)return;
 
+var val=[];
 /* build character boxes */
+for(var i=0;i<LEN;i++){var d=document.createElement('div');d.className='vault-char';wrap.appendChild(d)}
+var chars=Array.from(wrap.querySelectorAll('.vault-char'));
+if(chars.length)chars[0].classList.add('active');
+
+/* hide the old input completely */
+if(input)input.style.display='none';
+
+/* create a real text input that sits behind the boxes */
+var realInput=document.createElement('input');
+realInput.type='text';
+realInput.maxLength=LEN;
+realInput.autocomplete='off';
+realInput.autocorrect='off';
+realInput.autocapitalize='characters';
+realInput.spellcheck=false;
+realInput.setAttribute('inputmode','text');
+realInput.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;opacity:0;font-size:16px;z-index:5;';
+wrap.style.position='relative';
+wrap.appendChild(realInput);
+
+function updateDisplay(){
+var v=realInput.value.toUpperCase().replace(/[^A-Z0-9]/g,'');
+if(v.length>LEN)v=v.slice(0,LEN);
+realInput.value=v;
+val=v.split('');
 for(var i=0;i<LEN;i++){
-var d=document.createElement('div');
-d.className='vault-char';
-d.dataset.idx=String(i);
-wrap.appendChild(d);
+chars[i].textContent=val[i]||'';
+chars[i].classList.toggle('filled',i<val.length);
+chars[i].classList.toggle('active',i===val.length&&val.length<LEN);
 }
-var chars=wrap.querySelectorAll('.vault-char');
-
-/* focus input on tap */
-wrap.addEventListener('click',function(){input.focus()});
-chars.forEach(function(c){c.addEventListener('click',function(){input.focus()})});
-
-input.setAttribute('maxlength',String(LEN));
-
-input.addEventListener('input',function(){
-var val=input.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,LEN);
-input.value=val;
-chars.forEach(function(c,i){
-c.textContent=val[i]||'';
-c.classList.toggle('filled',!!val[i]);
-c.classList.toggle('active',i===val.length);
-});
 msg.textContent='';msg.className='vault-msg';
-});
+}
 
-input.addEventListener('keydown',function(e){
-if(e.key==='Enter')tryUnlock();
-});
+realInput.addEventListener('input',updateDisplay);
+realInput.addEventListener('keydown',function(e){if(e.key==='Enter')tryUnlock()});
+wrap.addEventListener('click',function(){realInput.focus()});
 
 if(submitBtn)submitBtn.addEventListener('click',tryUnlock);
 
 function tryUnlock(){
-var val=input.value.toUpperCase();
-if(val.length<LEN){
+var v=realInput.value.toUpperCase().replace(/[^A-Z0-9]/g,'');
+if(v.length<LEN){
 msg.textContent='Enter all '+LEN+' characters';
 msg.className='vault-msg denied';
-/* re-trigger shake */
 msg.style.animation='none';void msg.offsetWidth;msg.style.animation='';
 return;
 }
-if(val===CODE.toUpperCase()){
+if(v===CODE.toUpperCase()){
 msg.textContent='Unlocked';
 msg.className='vault-msg granted';
 if(section)section.classList.add('vault-unlocked');
-/* swap lock icon to unlocked */
 var lockEl=document.querySelector('.vault-lock');
 if(lockEl)lockEl.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 5-5 5 5 0 0 1 5 5"/></svg>';
-/* disable input */
-input.disabled=true;
+realInput.disabled=true;
 if(submitBtn)submitBtn.style.display='none';
-/* save to session */
 try{sessionStorage.setItem('vault','1')}catch(e){}
 }else{
 msg.textContent='Access denied';
 msg.className='vault-msg denied';
 msg.style.animation='none';void msg.offsetWidth;msg.style.animation='';
-/* shake the input boxes */
 wrap.style.animation='vaultShake .5s ease';
 setTimeout(function(){wrap.style.animation=''},600);
-/* clear after delay */
 setTimeout(function(){
-input.value='';
-chars.forEach(function(c){c.textContent='';c.classList.remove('filled','active')});
-chars[0].classList.add('active');
+realInput.value='';
+updateDisplay();
+realInput.focus();
 },800);
 }
 }
 
-/* restore if already unlocked this session */
+/* restore session */
 try{if(sessionStorage.getItem('vault')==='1'){
-input.value=CODE;
-chars.forEach(function(c,i){c.textContent=CODE[i]||'';c.classList.add('filled')});
+realInput.value=CODE;
+updateDisplay();
 msg.textContent='Unlocked';msg.className='vault-msg granted';
 if(section)section.classList.add('vault-unlocked');
 var lockEl2=document.querySelector('.vault-lock');
 if(lockEl2)lockEl2.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 5-5 5 5 0 0 1 5 5"/></svg>';
-input.disabled=true;if(submitBtn)submitBtn.style.display='none';
+realInput.disabled=true;if(submitBtn)submitBtn.style.display='none';
 }}catch(e){}
 })();
 
