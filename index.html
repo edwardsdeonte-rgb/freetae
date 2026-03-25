@@ -63,34 +63,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;o
 .nav a.on::after{width:60%}
 
 
-/* ═══ TIMELINE DRAG SCROLL ═══ */
-(function(){var t=document.getElementById('tlTrack');if(!t)return;var down=false,startX=0,scrollL=0;t.addEventListener('mousedown',function(e){down=true;t.classList.add('grabbing');startX=e.pageX-t.offsetLeft;scrollL=t.scrollLeft});t.addEventListener('mouseleave',function(){down=false;t.classList.remove('grabbing')});t.addEventListener('mouseup',function(){down=false;t.classList.remove('grabbing')});t.addEventListener('mousemove',function(e){if(!down)return;e.preventDefault();var x=e.pageX-t.offsetLeft;t.scrollLeft=scrollL-(x-startX)*1.5})})();
-
-/* ═══ LETTERS TO TAE ═══ */
-(function(){var wall=document.getElementById('lettersWall');var nameI=document.getElementById('letterName');var msgI=document.getElementById('letterMsg');var sendBtn=document.getElementById('letterSend');var toast=document.getElementById('letterToast');if(!wall||!sendBtn)return;
-/* load saved letters */
-try{var saved=JSON.parse(localStorage.getItem('tae_letters')||'[]');saved.forEach(function(l){addCard(l.msg,l.from)})}catch(e){}
-function addCard(msg,from){var d=document.createElement('div');d.className='letter-card';d.innerHTML='<div class="letter-msg">\u201c'+escHtml(msg)+'\u201d</div><div class="letter-from">\u2014 '+(from?escHtml(from):'Anonymous')+'</div>';wall.insertBefore(d,wall.firstChild);d.style.opacity='0';d.style.transform='translateY(8px)';requestAnimationFrame(function(){d.style.transition='opacity .5s,transform .5s';d.style.opacity='1';d.style.transform='none'})}
-function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
-sendBtn.addEventListener('click',function(){var msg=msgI.value.trim();if(!msg){msgI.style.borderColor='rgba(255,68,68,.4)';setTimeout(function(){msgI.style.borderColor=''},1500);return}
-var from=nameI.value.trim()||'Anonymous';addCard(msg,from);
-try{var saved=JSON.parse(localStorage.getItem('tae_letters')||'[]');saved.unshift({msg:msg,from:from});if(saved.length>50)saved=saved.slice(0,50);localStorage.setItem('tae_letters',JSON.stringify(saved))}catch(e){}
-msgI.value='';nameI.value='';if(toast){toast.textContent='Letter sent \u2714';setTimeout(function(){toast.textContent=''},2500)}
-sendBtn.disabled=true;setTimeout(function(){sendBtn.disabled=false},3000)})})();
-
-/* ═══ LEDGER ═══ */
-(function(){var totalEl=document.getElementById('ledgerTotal');var fillEl=document.getElementById('ledgerFill');if(!totalEl||!fillEl)return;
-var amount=100;var goal=10000;/* update these manually or via API */
-var pct=Math.min(100,(amount/goal*100)).toFixed(1);
-/* animate count up */
-var cur=0;var step=Math.max(1,Math.floor(amount/40));
-function tick(){cur=Math.min(cur+step,amount);totalEl.textContent='$'+cur.toLocaleString();if(cur<amount)requestAnimationFrame(tick)}
-var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){tick();fillEl.style.width=pct+'%';io.disconnect()}},{threshold:.3});
-io.observe(totalEl)})();
-
-/* ═══ HERO MOUSE GLOW ═══ */
-(function(){var hero=document.querySelector('.hero');if(!hero||'ontouchstart' in window)return;hero.addEventListener('mousemove',function(e){var r=hero.getBoundingClientRect();var x=((e.clientX-r.left)/r.width*100).toFixed(1);var y=((e.clientY-r.top)/r.height*100).toFixed(1);hero.style.setProperty('--mx',x+'%');hero.style.setProperty('--my',y+'%')})})();
-
 /* ═══ INTRO ═══ */
 html.intro-lock,html.intro-lock body{overflow:hidden}
 #intro{position:fixed;inset:0;z-index:20000;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,rgba(255,107,0,.14),rgba(0,0,0,.97) 50%,#000 100%);will-change:opacity}
@@ -598,4 +570,34 @@ window.addEventListener('wheel', hideHint, { passive:true, once:true });
   },{threshold:0.15});
   tlItems.forEach(function(el){io.observe(el);});
 })();
-</script></body></html>
+</script>
+<script>
+/* ═══ TIMELINE DRAG SCROLL ═══ */
+(function(){var t=document.getElementById('tlTrack');if(!t)return;var down=false,startX=0,scrollL=0;t.addEventListener('mousedown',function(e){down=true;t.classList.add('grabbing');startX=e.pageX-t.offsetLeft;scrollL=t.scrollLeft});t.addEventListener('mouseleave',function(){down=false;t.classList.remove('grabbing')});t.addEventListener('mouseup',function(){down=false;t.classList.remove('grabbing')});t.addEventListener('mousemove',function(e){if(!down)return;e.preventDefault();var x=e.pageX-t.offsetLeft;t.scrollLeft=scrollL-(x-startX)*1.5})})();
+
+/* ═══ LETTERS TO TAE ═══ */
+(function(){var wall=document.getElementById('lettersWall');var nameI=document.getElementById('letterName');var msgI=document.getElementById('letterMsg');var sendBtn=document.getElementById('letterSend');var toast=document.getElementById('letterToast');if(!wall||!sendBtn)return;
+/* load saved letters */
+try{var saved=JSON.parse(localStorage.getItem('tae_letters')||'[]');saved.forEach(function(l){addCard(l.msg,l.from)})}catch(e){}
+function addCard(msg,from){var d=document.createElement('div');d.className='letter-card';d.innerHTML='<div class="letter-msg">\u201c'+escHtml(msg)+'\u201d</div><div class="letter-from">\u2014 '+(from?escHtml(from):'Anonymous')+'</div>';wall.insertBefore(d,wall.firstChild);d.style.opacity='0';d.style.transform='translateY(8px)';requestAnimationFrame(function(){d.style.transition='opacity .5s,transform .5s';d.style.opacity='1';d.style.transform='none'})}
+function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+sendBtn.addEventListener('click',function(){var msg=msgI.value.trim();if(!msg){msgI.style.borderColor='rgba(255,68,68,.4)';setTimeout(function(){msgI.style.borderColor=''},1500);return}
+var from=nameI.value.trim()||'Anonymous';addCard(msg,from);
+try{var saved=JSON.parse(localStorage.getItem('tae_letters')||'[]');saved.unshift({msg:msg,from:from});if(saved.length>50)saved=saved.slice(0,50);localStorage.setItem('tae_letters',JSON.stringify(saved))}catch(e){}
+msgI.value='';nameI.value='';if(toast){toast.textContent='Letter sent \u2714';setTimeout(function(){toast.textContent=''},2500)}
+sendBtn.disabled=true;setTimeout(function(){sendBtn.disabled=false},3000)})})();
+
+/* ═══ LEDGER ═══ */
+(function(){var totalEl=document.getElementById('ledgerTotal');var fillEl=document.getElementById('ledgerFill');if(!totalEl||!fillEl)return;
+var amount=100;var goal=10000;/* update these manually or via API */
+var pct=Math.min(100,(amount/goal*100)).toFixed(1);
+/* animate count up */
+var cur=0;var step=Math.max(1,Math.floor(amount/40));
+function tick(){cur=Math.min(cur+step,amount);totalEl.textContent='$'+cur.toLocaleString();if(cur<amount)requestAnimationFrame(tick)}
+var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){tick();fillEl.style.width=pct+'%';io.disconnect()}},{threshold:.3});
+io.observe(totalEl)})();
+
+/* ═══ HERO MOUSE GLOW ═══ */
+(function(){var hero=document.querySelector('.hero');if(!hero||'ontouchstart' in window)return;hero.addEventListener('mousemove',function(e){var r=hero.getBoundingClientRect();var x=((e.clientX-r.left)/r.width*100).toFixed(1);var y=((e.clientY-r.top)/r.height*100).toFixed(1);hero.style.setProperty('--mx',x+'%');hero.style.setProperty('--my',y+'%')})})();
+</script>
+</body></html>
