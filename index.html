@@ -319,6 +319,8 @@ section{padding:90px 24px}
 #vault{background:linear-gradient(180deg,var(--bg),#050505);text-align:center;position:relative;overflow:hidden}
 #vault::before{content:'';position:absolute;top:50%;left:50%;width:600px;height:600px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,107,0,.05),transparent 70%);filter:blur(60px);pointer-events:none}
 .vault-container{max-width:480px;margin:44px auto 0;position:relative}
+.vault-container.reveal{animation:vaultFallback 1s ease 2s forwards}
+@keyframes vaultFallback{to{opacity:1;transform:none}}
 .vault-door{position:relative;width:200px;height:200px;margin:0 auto 32px;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(40,40,42,1),rgba(18,18,20,1));border:3px solid rgba(255,255,255,.08);box-shadow:0 0 60px rgba(0,0,0,.6),inset 0 2px 0 rgba(255,255,255,.06),inset 0 -4px 12px rgba(0,0,0,.5);transition:all .8s cubic-bezier(.16,1,.3,1)}
 .vault-door::before{content:'';position:absolute;inset:12px;border-radius:50%;border:2px solid rgba(255,255,255,.04);background:radial-gradient(circle at 45% 40%,rgba(50,50,52,.6),rgba(10,10,12,.8));box-shadow:inset 0 4px 20px rgba(0,0,0,.6)}
 .vault-door::after{content:'';position:absolute;inset:24px;border-radius:50%;border:1px solid rgba(255,107,0,.1);box-shadow:0 0 20px rgba(255,107,0,.05)}
@@ -409,6 +411,7 @@ footer strong{color:var(--primary);font-weight:600;animation:footerGlow 3s ease-
 
 /* ═══ PERFORMANCE ═══ */
 section{content-visibility:auto;contain-intrinsic-size:auto 800px}
+#vault{content-visibility:visible}
 .hero{content-visibility:visible}
 
 /* ═══ INTRO LOCK ═══ */
