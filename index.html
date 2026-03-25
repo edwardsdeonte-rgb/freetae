@@ -192,12 +192,19 @@ section{padding:90px 24px}
 .story-p{font-family:var(--sans);font-size:clamp(16px,.4vw + 15px,19px);line-height:1.95;color:rgba(255,255,255,.6);margin-bottom:24px;opacity:0;transform:translateY(18px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
 .story-p.in{opacity:1;transform:none}
 .story-hl{color:var(--primary);font-weight:800;letter-spacing:.6px}
-.story-name{font-weight:700;color:rgba(255,255,255,.85);letter-spacing:.4px}
+.s-dc{float:left;font-family:var(--heading);font-size:clamp(58px,8vw,82px);line-height:.75;margin:6px 10px 0 0;color:var(--primary);text-shadow:0 0 30px rgba(255,107,0,.3)}
+.story-kw{color:var(--primary);font-weight:700;letter-spacing:.4px;position:relative}
+.story-kw::after{content:'';position:absolute;bottom:-1px;left:0;width:0;height:1.5px;background:linear-gradient(90deg,var(--primary),var(--gold));transition:width .6s var(--ease)}
+.story-kw.in::after{width:100%}
+.story-wbw .s-word{display:inline;opacity:0;transform:translateY(6px);filter:blur(2px);transition:opacity .35s ease,transform .35s ease,filter .35s ease}
+.story-wbw.in .s-word{opacity:1;transform:none;filter:none}
+.story-name{font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.3px}
 .story-dot{color:var(--gold);font-weight:900}
-.story-pull{font-family:var(--sans);font-style:italic;font-size:clamp(20px,3vw,28px);color:rgba(212,168,67,.85);line-height:1.45;padding:24px 0 24px 24px;border-left:2px solid var(--primary);margin:32px 0;border-image:linear-gradient(to bottom,var(--primary),var(--gold-warm)) 1}
+.story-pull{font-family:var(--sans);font-style:italic;font-size:clamp(20px,3vw,28px);color:rgba(212,168,67,.85);line-height:1.45;padding:24px 0 24px 28px;border-left:3px solid var(--primary);margin:36px 0;border-image:linear-gradient(to bottom,var(--primary),var(--gold-warm)) 1}
 .story-end{margin-top:40px;padding-top:24px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
 .story-end div{font-family:var(--sans);font-size:clamp(20px,3.5vw,30px);font-weight:700;color:rgba(255,255,255,.85)}
-.story-end div:nth-child(2),.story-end div:nth-child(3){color:rgba(255,255,255,.4);font-size:clamp(16px,2.8vw,24px);font-weight:500}
+.story-end div:nth-child(2){color:rgba(255,255,255,.45);font-size:clamp(16px,2.8vw,24px);font-weight:500}
+.story-end div:nth-child(3){color:rgba(255,255,255,.55);font-size:clamp(17px,3vw,26px);font-weight:600}
 
 /* ═══ CONNECT ═══ */
 #connect{text-align:center;background:linear-gradient(180deg,var(--bg),var(--bg-dark))}
@@ -353,12 +360,12 @@ body.intro-done #site{opacity:1;visibility:visible;transition:opacity .6s cubic-
 <section id="story">
 <h2 class="section-title">STORY</h2>
 <div class="story-body">
-<p class="story-p"><span class="story-hl">FREETAE</span><span class="story-dot">.</span> <span class="story-name">Deonte Edwards</span> &#8212; producer, artist, and CEO of TierOneRecords, born &amp; raised in Long Beach, California with a mindset that&#8217;s lived, not advertised.</p>
-<blockquote class="story-pull story-p"><span class="story-hl">TRIAL AND ERROR</span> is more than just words &#8212; it&#8217;s a lifestyle.</blockquote>
-<p class="story-p">I started making music in 2009 with nothing but hunger and belief. No shortcuts. No safety net. Just vision. That grind led me into collaborations and industry intersections with Lil Wayne, Iggy Azalea, Jeremih, Sean Kingston, Hit-Boy, King Combs, and Tracy T, with affiliations connected to Roc Nation and Young Money Records in partnership with Republic Records.</p>
-<p class="story-p">In 2016, I lost my mother and turned grief into drive. The true cost wasn&#8217;t tragedy &#8212; it was the years invested chasing something greater than myself. Pouring everything into that pursuit eventually created instability, and I experienced a brief season of homelessness. Determined to rebuild and regain control of my life, I stepped into hustling &#8212; a choice that resulted in a federal drug indictment in 2022. I am currently serving a federal sentence.</p>
-<p class="story-p">From confinement, the blueprint for TierOneRecords continues to expand with clarity and intention. Circumstances do not dictate direction. Pressure creates growth. The mission remains locked.</p>
-<div class="story-end story-p"><div>Built from the ground up.</div><div>Passion-fueled.</div><div>Unfinished &#8212; still in motion.</div></div>
+<p class="story-p story-wbw"><span class="s-dc">F</span>REETAE. <span class="story-name">Deonte Edwards</span> &#8212; producer, artist, CEO of TierOneRecords. Born and raised in Long Beach, California. Everything about this name was earned, not given.</p>
+<blockquote class="story-pull story-p story-wbw"><span class="story-kw">TRIAL AND ERROR</span> isn&#8217;t a slogan. It&#8217;s the only way I know.</blockquote>
+<p class="story-p story-wbw">I picked up production in <span class="story-kw">2009</span> with nothing but <span class="story-kw">hunger</span> and belief. No connections. No funding. No safety net. Just a vision that wouldn&#8217;t let me sleep. That obsession opened doors &#8212; sessions and intersections with <span class="story-name">Lil Wayne</span>, <span class="story-name">Iggy Azalea</span>, <span class="story-name">Jeremih</span>, <span class="story-name">Sean Kingston</span>, <span class="story-name">Hit-Boy</span>, <span class="story-name">King Combs</span>, and <span class="story-name">Tracy T</span>. Affiliations connected to <span class="story-name">Roc Nation</span> and <span class="story-name">Young Money</span> in partnership with <span class="story-name">Republic Records</span>.</p>
+<p class="story-p story-wbw">In <span class="story-kw">2016</span>, I buried my mother. Grief didn&#8217;t break the mission &#8212; it sharpened it. But the years of pouring everything into this pursuit took their toll. Instability crept in. I went through a season of homelessness. Determined to rebuild, I made choices that led to a <span class="story-kw">federal indictment in 2022</span>. I&#8217;m currently serving a federal sentence.</p>
+<p class="story-p story-wbw">But walls don&#8217;t stop what was built to last. From inside, the blueprint for <span class="story-kw">TierOneRecords</span> keeps expanding &#8212; with more clarity than ever. Circumstances don&#8217;t dictate direction. <span class="story-kw">Pressure creates growth.</span> The mission stays locked.</p>
+<div class="story-end story-p story-wbw"><div>Built from nothing.</div><div>Fueled by everything.</div><div>Still unfinished &#8212; <span class="story-kw">still in motion.</span></div></div>
 </div></section>
 
 <div class="divider"></div>
@@ -394,7 +401,19 @@ var SE=(function(){var cbs=new Set,ticking=false;function run(){ticking=false;va
 (function(){var nav=document.querySelector('.nav');if(!nav)return;var links=nav.querySelectorAll('a');var secs=[];links.forEach(function(a){var el=document.querySelector(a.getAttribute('href'));if(el)secs.push({el:el,a:a})});var hH=window.innerHeight*.5;SE.add(function(y){if(y>hH){nav.classList.add('show');nav.classList.toggle('filled',y>hH+100)}else nav.classList.remove('show','filled');var cur=null;for(var i=secs.length-1;i>=0;i--)if(secs[i].el.getBoundingClientRect().top<=120){cur=secs[i];break}links.forEach(function(l){l.classList.remove('on')});if(cur)cur.a.classList.add('on')})})();
 
 /* ═══ SCROLL REVEALS ═══ */
-(function(){var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;var els=document.querySelectorAll('.card,.story-p,.reveal,.section-title,.divider');if(rm){els.forEach(function(e){e.classList.add('in')});return}var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px',threshold:.08});els.forEach(function(e){io.observe(e)})})();
+(function(){var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;var els=document.querySelectorAll('.card,.story-p,.reveal,.section-title,.divider');if(rm){els.forEach(function(e){e.classList.add('in')});return}
+/* wrap word-by-word story paragraphs */
+document.querySelectorAll('.story-wbw').forEach(function(p){
+var nodes=[];function walk(n){if(n.nodeType===3){var words=n.textContent.split(/( +)/);words.forEach(function(w){if(!w)return;if(w.trim()===''){nodes.push(document.createTextNode(w))}else{var s=document.createElement('span');s.className='s-word';s.textContent=w;nodes.push(s)}});return true}return false}
+var children=Array.from(p.childNodes);var frag=document.createDocumentFragment();children.forEach(function(c){if(c.nodeType===3){walk(c);nodes.forEach(function(n){frag.appendChild(n)});nodes=[]}else if(c.nodeType===1){var el=c.cloneNode(false);var inner=[];function walkInner(n2){if(n2.nodeType===3){var ws=n2.textContent.split(/( +)/);ws.forEach(function(w2){if(!w2)return;if(w2.trim()===''){el.appendChild(document.createTextNode(w2))}else{var s2=document.createElement('span');s2.className='s-word';s2.textContent=w2;el.appendChild(s2)}});return}if(n2.nodeType===1){var sub=n2.cloneNode(false);Array.from(n2.childNodes).forEach(function(ch){walkInner(ch)});/* for inline elements like span, wrap their text children */
+var subEl=n2.cloneNode(false);Array.from(n2.childNodes).forEach(function(ch2){if(ch2.nodeType===3){var ws2=ch2.textContent.split(/( +)/);ws2.forEach(function(w3){if(!w3)return;if(w3.trim()===''){subEl.appendChild(document.createTextNode(w3))}else{var s3=document.createElement('span');s3.className='s-word';s3.textContent=w3;subEl.appendChild(s3)}})}else{subEl.appendChild(ch2.cloneNode(true))}});el.appendChild(subEl);return}}
+Array.from(c.childNodes).forEach(function(gc){if(gc.nodeType===3){var ws3=gc.textContent.split(/( +)/);ws3.forEach(function(w4){if(!w4)return;if(w4.trim()===''){el.appendChild(document.createTextNode(w4))}else{var s4=document.createElement('span');s4.className='s-word';s4.textContent=w4;el.appendChild(s4)}})}else{var clone=gc.cloneNode(true);el.appendChild(clone)}});frag.appendChild(el)}});while(p.firstChild)p.removeChild(p.firstChild);p.appendChild(frag)});
+var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');
+/* stagger word reveals */
+if(e.target.classList.contains('story-wbw')){var words=e.target.querySelectorAll('.s-word');words.forEach(function(w,i){w.style.transitionDelay=(i*28)+'ms'})}
+/* animate keyword underlines */
+var kws=e.target.querySelectorAll('.story-kw');kws.forEach(function(k,i){setTimeout(function(){k.classList.add('in')},400+i*200)});
+io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px',threshold:.08});els.forEach(function(e){io.observe(e)})})();
 
 /* ═══ HERO ARROW ═══ */
 (function(){var content=document.querySelector('.hero-content');var canvas=document.getElementById('heroCanvas');var hero=document.querySelector('.hero');var hTitle=document.querySelector('.hero-title');var hSub=document.querySelector('.hero-sub');var hMeta=document.querySelector('.hero-meta');var hCta=document.querySelector('.hero-cta');if(!content||!hero)return;var hH=hero.offsetHeight;SE.add(function(y){if(y>hH)return;var r=y/hH;content.style.opacity=String(Math.max(0,1-r*1.4));if(hTitle)hTitle.style.transform='translateY('+Math.round(y*.08)+'px)';if(hSub)hSub.style.transform='translateY('+Math.round(y*.14)+'px)';if(hMeta)hMeta.style.transform='translateY('+Math.round(y*.2)+'px)';if(hCta)hCta.style.transform='translateY('+Math.round(y*.26)+'px)';if(canvas)canvas.style.transform='translateY('+Math.round(y*.04)+'px) scale('+(1+r*.08).toFixed(3)+')'})})();
