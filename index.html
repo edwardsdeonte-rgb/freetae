@@ -135,6 +135,13 @@ section{padding:90px 24px}
 .cover-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(20,20,22,.7),transparent);pointer-events:none;z-index:1}
 .cover-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1),filter .6s}
 .card:hover .cover-wrap img{transform:scale(1.04) rotate(.5deg);filter:brightness(1.05) contrast(1.02)}
+.card.featured .cover-wrap img{filter:blur(var(--blur,18px)) brightness(.85) saturate(.7);transition:filter 1s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+.card.featured:hover .cover-wrap img{filter:blur(var(--blur,18px)) brightness(.9) saturate(.8);transform:scale(1.02)}
+.card.featured .cover-tease{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none}
+.cover-tease-lock{width:40px;height:40px;opacity:.6;animation:lockPulse 3s ease-in-out infinite}
+@keyframes lockPulse{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.7;transform:scale(1.08)}}
+.cover-tease-text{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,215,0,.7);text-shadow:0 2px 12px rgba(0,0,0,.8)}
+.cover-tease-pct{font-family:var(--mono);font-size:22px;font-weight:600;color:var(--gold);text-shadow:0 0 20px rgba(255,215,0,.3);letter-spacing:2px}
 .cover-wrap::before{content:'';position:absolute;inset:0;z-index:2;opacity:0;background:radial-gradient(circle at 50% 50%,transparent 30%,rgba(0,0,0,.2) 50%,rgba(0,0,0,.6) 70%,rgba(0,0,0,.9) 100%);mix-blend-mode:multiply;transition:opacity .5s;pointer-events:none}
 .card:hover .cover-wrap::before{opacity:.35}
 .badge{position:absolute;top:14px;right:14px;z-index:2;padding:6px 14px;border-radius:99px;font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#000;font-weight:600;background:linear-gradient(135deg,var(--gold),#ffef6b);box-shadow:0 8px 24px rgba(255,215,0,.25),0 2px 8px rgba(0,0,0,.3);overflow:hidden}
@@ -294,6 +301,11 @@ body.intro-done #site{opacity:1;visibility:visible;transition:opacity .6s cubic-
 <div class="cover-wrap">
 <span class="badge">Coming Soon</span>
 <img src="assets/embedded-001-cf9b9f17a21c002d.webp" alt="Sign Language cover art" loading="eager" width="1400" height="1400">
+<div class="cover-tease">
+<svg class="cover-tease-lock" viewBox="0 0 24 24" fill="none" stroke="rgba(255,215,0,.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+<div class="cover-tease-text">Reveals at drop</div>
+<div class="cover-tease-pct" id="blurPct"></div>
+</div>
 <div class="cd-overlay"><div class="cd-grid"><div class="cd-unit"><div class="cd-num" id="cdD">--</div><div class="cd-lbl">Days</div></div><div class="cd-unit"><div class="cd-num" id="cdH">--</div><div class="cd-lbl">Hrs</div></div><div class="cd-unit"><div class="cd-num" id="cdM">--</div><div class="cd-lbl">Min</div></div><div class="cd-unit"><div class="cd-num" id="cdS">--</div><div class="cd-lbl">Sec</div></div></div></div>
 </div>
 <div class="meta"><div class="kicker">Single</div><div class="title">SIGN LANGUAGE</div><div class="credits"><div class="artist">Deonte Edwards</div><div class="prod">Produced by <em>Deonte Edwards</em></div></div></div>
@@ -396,7 +408,17 @@ var SE=(function(){var cbs=new Set,ticking=false;function run(){ticking=false;va
 (function(){var PLAY='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',PAUSE='<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';var cur=null,curP=null;function fmt(s){return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0')}document.querySelectorAll('.audio-prev').forEach(function(p){var btn=p.querySelector('.ap-btn'),bar=p.querySelector('.ap-bar'),time=p.querySelector('.ap-time'),wrap=p.querySelector('.ap-bar-wrap'),src=p.dataset.audio;if(!btn||!src)return;var a=null;function stop(){if(!a)return;a.pause();a.currentTime=0;btn.innerHTML=PLAY;btn.classList.remove('playing');bar.style.width='0%';time.textContent='0:30';if(curP===p){cur=null;curP=null}}function play(){if(cur&&curP!==p){var ob=curP.querySelector('.ap-btn');cur.pause();cur.currentTime=0;if(ob){ob.innerHTML=PLAY;ob.classList.remove('playing')}var obar=curP.querySelector('.ap-bar');if(obar)obar.style.width='0%';var ot=curP.querySelector('.ap-time');if(ot)ot.textContent='0:30';cur=null;curP=null}if(!a){a=new Audio(src);a.preload='none';a.addEventListener('timeupdate',function(){if(!a.duration)return;bar.style.width=((a.currentTime/a.duration)*100).toFixed(1)+'%';time.textContent=fmt(Math.max(0,a.duration-a.currentTime))});a.addEventListener('ended',stop);a.addEventListener('error',function(){time.textContent='--'})}a.play().then(function(){btn.innerHTML=PAUSE;btn.classList.add('playing');cur=a;curP=p}).catch(function(){})}btn.addEventListener('click',function(){if(a&&!a.paused)stop();else play()});if(wrap)wrap.addEventListener('click',function(e){if(!a||!a.duration)return;var r=wrap.getBoundingClientRect();a.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*a.duration})})})();
 
 /* ═══ COUNTDOWN ═══ */
-(function(){var D=document.getElementById('cdD'),H=document.getElementById('cdH'),M=document.getElementById('cdM'),S=document.getElementById('cdS');if(!D)return;var target=new Date(2026,6,17);var pad=function(n){return String(n).padStart(2,'0')};function tick(){var diff=target-new Date();if(diff<=0){D.textContent='00';H.textContent='00';M.textContent='00';S.textContent='00';return}var s=Math.floor(diff/1000);D.textContent=Math.floor(s/86400);H.textContent=pad(Math.floor(s%86400/3600));M.textContent=pad(Math.floor(s%3600/60));S.textContent=pad(s%60)}tick();setInterval(tick,1000)})();
+(function(){var D=document.getElementById('cdD'),H=document.getElementById('cdH'),M=document.getElementById('cdM'),S=document.getElementById('cdS');if(!D)return;var target=new Date(2026,6,17);var pad=function(n){return String(n).padStart(2,'0')};function tick(){var diff=target-new Date();if(diff<=0){D.textContent='00';H.textContent='00';M.textContent='00';S.textContent='00';return}var s=Math.floor(diff/1000);D.textContent=Math.floor(s/86400);H.textContent=pad(Math.floor(s%86400/3600));M.textContent=pad(Math.floor(s%3600/60));S.textContent=pad(s%60)}tick();setInterval(tick,1000);
+/* blur reveal: starts at 18px, reaches 0 on release day */
+var totalDays=120;/* rough window — adjust as needed */
+var daysLeft=Math.max(0,Math.floor((target-new Date())/864e5));
+var blurAmt=Math.max(0,Math.min(18,Math.round(daysLeft/totalDays*18)));
+var pct=Math.min(100,Math.round((1-daysLeft/totalDays)*100));
+var fc=document.querySelector('.card.featured');
+if(fc)fc.style.setProperty('--blur',blurAmt+'px');
+var bp=document.getElementById('blurPct');
+if(bp)bp.textContent=pct+'% revealed';
+})();
 
 /* ═══ MODALS ═══ */
 (function(){var streamM=document.getElementById('streamModal'),supM=document.getElementById('supportModal');var active=null;function lock(){document.body.style.overflow='hidden'}function unlock(){document.body.style.overflow=''}function open(m){active=m;m.classList.add('open');m.setAttribute('aria-hidden','false');lock()}function close(m){if(!m)return;m.classList.remove('open');m.setAttribute('aria-hidden','true');if(active===m){active=null;unlock()}}
