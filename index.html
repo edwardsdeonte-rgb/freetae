@@ -66,23 +66,6 @@ body::after{content:'';position:fixed;inset:0;z-index:9997;pointer-events:none;o
 /* ═══ TIMELINE DRAG SCROLL ═══ */
 (function(){var t=document.getElementById('tlTrack');if(!t)return;var down=false,startX=0,scrollL=0;t.addEventListener('mousedown',function(e){down=true;t.classList.add('grabbing');startX=e.pageX-t.offsetLeft;scrollL=t.scrollLeft});t.addEventListener('mouseleave',function(){down=false;t.classList.remove('grabbing')});t.addEventListener('mouseup',function(){down=false;t.classList.remove('grabbing')});t.addEventListener('mousemove',function(e){if(!down)return;e.preventDefault();var x=e.pageX-t.offsetLeft;t.scrollLeft=scrollL-(x-startX)*1.5})})();
 
-/* ═══ FREQUENCY VISUALIZER ═══ */
-(function(){var canvas=document.getElementById('freqCanvas');var idle=document.getElementById('freqIdle');var trackLabel=document.getElementById('freqTrack');if(!canvas)return;var ctx=canvas.getContext('2d');var W,H,audioCtx,analyser,src,connected=null,raf=0;
-function resize(){var r=canvas.parentElement.getBoundingClientRect();var d=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;canvas.width=W*d;canvas.height=H*d;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(d,0,0,d,0,0)}
-resize();window.addEventListener('resize',resize,{passive:true});
-function drawIdle(){ctx.clearRect(0,0,W,H);var bars=64;var bw=W/bars;for(var i=0;i<bars;i++){var h=2+Math.random()*3;ctx.fillStyle='rgba(255,107,0,0.08)';ctx.fillRect(i*bw+1,H/2-h/2,bw-2,h)}raf=requestAnimationFrame(drawIdle)}
-drawIdle();
-window._freqConnect=function(audio,name){
-if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-if(!analyser){analyser=audioCtx.createAnalyser();analyser.fftSize=256;analyser.smoothingTimeConstant=.8}
-if(connected!==audio){if(src)try{src.disconnect()}catch(e){}src=audioCtx.createMediaElementSource(audio);src.connect(analyser);analyser.connect(audioCtx.destination);connected=audio}
-if(trackLabel)trackLabel.textContent=name||'Playing';
-if(idle)idle.classList.add('hidden');
-if(raf)cancelAnimationFrame(raf);
-var data=new Uint8Array(analyser.frequencyBinCount);
-function draw(){raf=requestAnimationFrame(draw);analyser.getByteFrequencyData(data);ctx.clearRect(0,0,W,H);var bars=data.length;var bw=W/bars;for(var i=0;i<bars;i++){var v=data[i]/255;var h=v*H*.85;var hue=20+v*25;ctx.fillStyle='hsla('+hue+',100%,'+(45+v*20)+'%,'+(0.4+v*.5)+')';ctx.shadowColor='rgba(255,107,0,'+(v*.3).toFixed(2)+')';ctx.shadowBlur=v*8;ctx.fillRect(i*bw+1,H-h,bw-2,h);ctx.shadowBlur=0}}draw()};
-window._freqDisconnect=function(){if(idle)idle.classList.remove('hidden');if(trackLabel)trackLabel.textContent='\u2014';if(raf)cancelAnimationFrame(raf);drawIdle()}})();
-
 /* ═══ LETTERS TO TAE ═══ */
 (function(){var wall=document.getElementById('lettersWall');var nameI=document.getElementById('letterName');var msgI=document.getElementById('letterMsg');var sendBtn=document.getElementById('letterSend');var toast=document.getElementById('letterToast');if(!wall||!sendBtn)return;
 /* load saved letters */
@@ -346,16 +329,6 @@ textarea.letter-input{resize:none;min-height:80px}
 .letter-send:disabled{opacity:.4;cursor:default;transform:none}
 .letter-toast{text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:2px;color:rgba(46,204,113,.7);min-height:18px;margin-top:8px}
 
-/* ═══ FREQUENCY ═══ */
-#frequency{background:linear-gradient(180deg,#050505,var(--bg));text-align:center;position:relative}
-.freq-container{max-width:600px;margin:32px auto 0}
-.freq-canvas-wrap{position:relative;height:180px;border-radius:16px;overflow:hidden;background:rgba(10,10,12,.8);border:1px solid rgba(255,255,255,.05);box-shadow:inset 0 2px 12px rgba(0,0,0,.4)}
-#freqCanvas{width:100%;height:100%;display:block}
-.freq-label{margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.25)}
-.freq-label em{font-style:normal;color:var(--primary)}
-.freq-idle{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.15);pointer-events:none;transition:opacity .4s}
-.freq-idle.hidden{opacity:0}
-
 /* ═══ LEDGER ═══ */
 #ledger{background:linear-gradient(180deg,var(--bg),#050505);text-align:center;position:relative}
 .ledger-container{max-width:520px;margin:32px auto 0}
@@ -480,7 +453,7 @@ body.intro-done #site{opacity:1;visibility:visible;transition:opacity .8s cubic-
 <article class="card"><div class="card-inner">
 <div class="cover-wrap"><img src="assets/embedded-002-d61651eb3a6c35ba.webp" alt="Lil Romeo cover art" loading="lazy" width="1400" height="1400"></div>
 <div class="meta"><div class="kicker">Single</div><div class="title">LIL ROMEO</div><div class="credits"><div class="artist">Lil Wayne</div><div class="prod">Produced by <em>Deonte Edwards</em></div></div>
-<div class="audio-prev" data-audio="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e3/eb/05/e3eb05bf-0a03-9d72-aaf4-f3e37b32ef55/mzaf_16394183778875731136.plus.aac.p.m4a"><button class="ap-btn" type="button" aria-label="Preview Lil Romeo"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><div class="ap-track"><div class="ap-bar-wrap"><div class="ap-bar"></div></div><div class="ap-meta"><span class="ap-label">Preview</span><span class="ap-time">0:30</span></div></div></div>
+<div class="audio-prev" data-audio="assets/preview-lil-romeo.m4a"><button class="ap-btn" type="button" aria-label="Preview Lil Romeo"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><div class="ap-track"><div class="ap-bar-wrap"><div class="ap-bar"></div></div><div class="ap-meta"><span class="ap-label">Preview</span><span class="ap-time">0:30</span></div></div></div>
 </div>
 <div class="actions"><button class="btn btn-sm btn-primary js-stream" data-title="LIL ROMEO" data-sub="Choose a platform" data-links='[{"platform":"Apple Music","url":"https://music.apple.com/nz/song/lil-romeo/1605046489"},{"platform":"Spotify","url":"https://open.spotify.com/track/12mEMcIRUVlhpvcZMmtH08?si=qMTUU_mpTgilhFbIE8cnBA"},{"platform":"YouTube","url":"https://youtu.be/aeShMrfer9A?si=6LxOQ9GYXfFp0dR_"}]'>Stream Now</button></div>
 </div></article>
@@ -488,7 +461,7 @@ body.intro-done #site{opacity:1;visibility:visible;transition:opacity .8s cubic-
 <article class="card"><div class="card-inner">
 <div class="cover-wrap"><img src="assets/embedded-003-b74e05441642935b.webp" alt="DAMNThatsCHILLEE cover art" loading="lazy" width="1400" height="1400"></div>
 <div class="meta"><div class="kicker">Project</div><div class="title">DAMNThatsCHILLEE</div><div class="credits"><div class="artist">Chillee Fuego x DAMNThatsTight</div><div class="prod">Produced by <em>Deonte Edwards</em></div></div>
-<div class="audio-prev" data-audio="https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/07/e9/69/07e969c7-dbbf-32cf-ff13-7145fd254c63/mzaf_9463227488803448433.plus.aac.p.m4a"><button class="ap-btn" type="button" aria-label="Preview DAMNThatsCHILLEE"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><div class="ap-track"><div class="ap-bar-wrap"><div class="ap-bar"></div></div><div class="ap-meta"><span class="ap-label">Preview</span><span class="ap-time">0:30</span></div></div></div>
+<div class="audio-prev" data-audio="assets/preview-damnthatschillee.m4a"><button class="ap-btn" type="button" aria-label="Preview DAMNThatsCHILLEE"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><div class="ap-track"><div class="ap-bar-wrap"><div class="ap-bar"></div></div><div class="ap-meta"><span class="ap-label">Preview</span><span class="ap-time">0:30</span></div></div></div>
 </div>
 <div class="actions"><button class="btn btn-sm btn-primary js-stream" data-title="DAMNThatsCHILLEE" data-sub="Choose a platform" data-links='[{"platform":"Apple Music","url":"https://music.apple.com/us/album/damnthatschillee/1715155449"},{"platform":"Spotify","url":"https://open.spotify.com/album/5JCeym5LSfyViz78GZR9hX?si=7c0NE0NQTByJxiq9w321Qg"},{"platform":"YouTube","url":"https://youtube.com/playlist?list=OLAK5uy_nnzGaW5QE6ziGo4h2vQ6H0K0IVz6Es3rY&si=TokvbE-k9qdbcpM2"}]'>Stream Now</button></div>
 </div></article>
@@ -538,12 +511,13 @@ body.intro-done #site{opacity:1;visibility:visible;transition:opacity .8s cubic-
 <div class="vault-msg" id="vaultMsg"></div>
 <div class="vault-hint">Clues drop on <a href="https://instagram.com/deonteedwards" target="_blank" rel="noopener noreferrer">Instagram</a> &#8212; follow for the code.</div>
 <div class="vault-reveal" id="vaultReveal">
-<div class="vault-reveal-title">ACCESS GRANTED</div>
+<div class="vault-reveal-title">YOU&#8217;RE EARLY</div>
 <div class="vault-reveal-text">
-<em>SIGN LANGUAGE</em> is coming.<br><br>
-Every word was written with intention. Every beat was placed with purpose. This isn&#8217;t just a single &#8212; it&#8217;s a statement.<br><br>
-The first body of work released from inside. Proof that walls don&#8217;t silence what was meant to be heard.<br><br>
-<em>July 17, 2026.</em>
+You just cracked the vault before the world even knows it exists.<br><br>
+<em>SIGN LANGUAGE</em> drops <em>July 17, 2026</em> &#8212; and you&#8217;re on the list now. This is the first project created entirely from inside a federal facility. No studio. No engineer. No label. Just bars, a vision, and something to prove.<br><br>
+When this drops, remember: you were here first.<br><br>
+Screenshot this. Share it. Tell them you had access before anyone.<br><br>
+<em style="font-size:16px;letter-spacing:2px">&#8212; TAE</em>
 </div>
 </div>
 </div>
@@ -562,18 +536,6 @@ The first body of work released from inside. Proof that walls don&#8217;t silenc
 <div class="tl-node"><div class="tl-card"><span class="tl-dot"></span><div class="tl-year">2026</div><div class="tl-title">Sign Language</div><div class="tl-desc">The next chapter. Every word written with intention. Every beat placed with purpose. July 17.</div></div></div>
 </div>
 <div class="tl-hint">&#8592; Drag to explore &#8594;</div>
-</section>
-
-<div class="divider"></div>
-<section id="frequency">
-<h2 class="section-title">FREQUENCY CHECK</h2>
-<div class="freq-container reveal">
-<div class="freq-canvas-wrap">
-<canvas id="freqCanvas"></canvas>
-<div class="freq-idle" id="freqIdle">Play a preview to activate</div>
-</div>
-<div class="freq-label">Visualizing: <em id="freqTrack">&#8212;</em></div>
-</div>
 </section>
 
 <div class="divider"></div>
@@ -671,7 +633,7 @@ io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px',threshold:.08});els.for
 (function(){var c=document.getElementById('heroCanvas');if(!c)return;if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches){c.style.display='none';return}var ctx=c.getContext('2d'),w,h,aid=0;var waves=[];for(var i=0;i<5;i++)waves.push({a:14+Math.random()*30,f:.005+Math.random()*.009,s:.006+Math.random()*.01,p:Math.random()*Math.PI*2,y:.32+Math.random()*.36,c:i%2===0?'rgba(255,107,0,'+(0.08+i*.025).toFixed(3)+')':'rgba(212,168,67,'+(0.05+i*.02).toFixed(3)+')'});function resize(){var d=Math.min(devicePixelRatio||1,2);var r=c.parentElement.getBoundingClientRect();w=r.width;h=r.height;c.width=w*d;c.height=h*d;c.style.width=w+'px';c.style.height=h+'px';ctx.setTransform(d,0,0,d,0,0)}function draw(t){ctx.clearRect(0,0,w,h);for(var i=0;i<waves.length;i++){var wv=waves[i];wv.p+=wv.s;ctx.beginPath();ctx.moveTo(0,h*wv.y);for(var x=0;x<=w;x+=3)ctx.lineTo(x,h*wv.y+Math.sin(x*wv.f+wv.p)*wv.a+Math.sin(x*wv.f*.5+wv.p*1.4)*(wv.a*.3));ctx.strokeStyle=wv.c;ctx.lineWidth=1.2;ctx.stroke()}var pulse=Math.sin(t*.0008)*.5+.5;var g=ctx.createRadialGradient(w*.5,h*.4,0,w*.5,h*.4,w*.35);g.addColorStop(0,'rgba(255,107,0,'+(0.035*pulse).toFixed(4)+')');g.addColorStop(1,'rgba(255,107,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);aid=requestAnimationFrame(draw)}resize();window.addEventListener('resize',resize,{passive:true});var io=new IntersectionObserver(function(e){e.forEach(function(en){if(en.isIntersecting){if(!aid)aid=requestAnimationFrame(draw)}else{if(aid){cancelAnimationFrame(aid);aid=0}}})},{threshold:.05});var hero=c.closest('.hero');if(hero)io.observe(hero);else aid=requestAnimationFrame(draw)})();
 
 /* ═══ AUDIO PREVIEWS ═══ */
-(function(){var PLAY='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',PAUSE='<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';var cur=null,curP=null;function fmt(s){return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0')}document.querySelectorAll('.audio-prev').forEach(function(p){var btn=p.querySelector('.ap-btn'),bar=p.querySelector('.ap-bar'),time=p.querySelector('.ap-time'),wrap=p.querySelector('.ap-bar-wrap'),src=p.dataset.audio;if(!btn||!src)return;var a=null;function stop(){if(!a)return;a.pause();a.currentTime=0;btn.innerHTML=PLAY;btn.classList.remove('playing');bar.style.width='0%';time.textContent='0:30';if(curP===p){cur=null;curP=null;if(window._freqDisconnect)window._freqDisconnect()}}function play(){if(cur&&curP!==p){var ob=curP.querySelector('.ap-btn');cur.pause();cur.currentTime=0;if(ob){ob.innerHTML=PLAY;ob.classList.remove('playing')}var obar=curP.querySelector('.ap-bar');if(obar)obar.style.width='0%';var ot=curP.querySelector('.ap-time');if(ot)ot.textContent='0:30';cur=null;curP=null}if(!a){a=new Audio(src);a.preload='none';a.addEventListener('timeupdate',function(){if(!a.duration)return;bar.style.width=((a.currentTime/a.duration)*100).toFixed(1)+'%';time.textContent=fmt(Math.max(0,a.duration-a.currentTime))});a.addEventListener('ended',stop);a.addEventListener('error',function(){time.textContent='--'})}a.play().then(function(){btn.innerHTML=PAUSE;btn.classList.add('playing');cur=a;curP=p;var tn=p.closest('.card-inner');var name=tn?tn.querySelector('.title'):null;if(window._freqConnect)try{window._freqConnect(a,name?name.textContent:'Preview')}catch(e){}}).catch(function(){})}btn.addEventListener('click',function(){if(a&&!a.paused)stop();else play()});if(wrap)wrap.addEventListener('click',function(e){if(!a||!a.duration)return;var r=wrap.getBoundingClientRect();a.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*a.duration})})})();
+(function(){var PLAY='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',PAUSE='<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';var cur=null,curP=null;function fmt(s){return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0')}document.querySelectorAll('.audio-prev').forEach(function(p){var btn=p.querySelector('.ap-btn'),bar=p.querySelector('.ap-bar'),time=p.querySelector('.ap-time'),wrap=p.querySelector('.ap-bar-wrap'),src=p.dataset.audio;if(!btn||!src)return;var a=null;function stop(){if(!a)return;a.pause();a.currentTime=0;btn.innerHTML=PLAY;btn.classList.remove('playing');bar.style.width='0%';time.textContent='0:30';if(curP===p){cur=null;curP=null}}function play(){if(cur&&curP!==p){var ob=curP.querySelector('.ap-btn');cur.pause();cur.currentTime=0;if(ob){ob.innerHTML=PLAY;ob.classList.remove('playing')}var obar=curP.querySelector('.ap-bar');if(obar)obar.style.width='0%';var ot=curP.querySelector('.ap-time');if(ot)ot.textContent='0:30';cur=null;curP=null}if(!a){a=new Audio(src);a.preload='none';a.addEventListener('timeupdate',function(){if(!a.duration)return;bar.style.width=((a.currentTime/a.duration)*100).toFixed(1)+'%';time.textContent=fmt(Math.max(0,a.duration-a.currentTime))});a.addEventListener('ended',stop);a.addEventListener('error',function(){time.textContent='--'})}a.play().then(function(){btn.innerHTML=PAUSE;btn.classList.add('playing');cur=a;curP=p}).catch(function(){})}btn.addEventListener('click',function(){if(a&&!a.paused)stop();else play()});if(wrap)wrap.addEventListener('click',function(e){if(!a||!a.duration)return;var r=wrap.getBoundingClientRect();a.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*a.duration})})})();
 
 /* ═══ COUNTDOWN ═══ */
 (function(){var D=document.getElementById('cdD'),H=document.getElementById('cdH'),M=document.getElementById('cdM'),S=document.getElementById('cdS');if(!D)return;var target=new Date(2026,6,17);var pad=function(n){return String(n).padStart(2,'0')};function tick(){var diff=target-new Date();if(diff<=0){D.textContent='00';H.textContent='00';M.textContent='00';S.textContent='00';return}var s=Math.floor(diff/1000);D.textContent=Math.floor(s/86400);H.textContent=pad(Math.floor(s%86400/3600));M.textContent=pad(Math.floor(s%3600/60));S.textContent=pad(s%60)}tick();setInterval(tick,1000);
@@ -795,23 +757,6 @@ realInput.disabled=true;if(submitBtn)submitBtn.style.display='none';
 
 /* ═══ TIMELINE DRAG SCROLL ═══ */
 (function(){var t=document.getElementById('tlTrack');if(!t)return;var down=false,startX=0,scrollL=0;t.addEventListener('mousedown',function(e){down=true;t.classList.add('grabbing');startX=e.pageX-t.offsetLeft;scrollL=t.scrollLeft});t.addEventListener('mouseleave',function(){down=false;t.classList.remove('grabbing')});t.addEventListener('mouseup',function(){down=false;t.classList.remove('grabbing')});t.addEventListener('mousemove',function(e){if(!down)return;e.preventDefault();var x=e.pageX-t.offsetLeft;t.scrollLeft=scrollL-(x-startX)*1.5})})();
-
-/* ═══ FREQUENCY VISUALIZER ═══ */
-(function(){var canvas=document.getElementById('freqCanvas');var idle=document.getElementById('freqIdle');var trackLabel=document.getElementById('freqTrack');if(!canvas)return;var ctx=canvas.getContext('2d');var W,H,audioCtx,analyser,src,connected=null,raf=0;
-function resize(){var r=canvas.parentElement.getBoundingClientRect();var d=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;canvas.width=W*d;canvas.height=H*d;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(d,0,0,d,0,0)}
-resize();window.addEventListener('resize',resize,{passive:true});
-function drawIdle(){ctx.clearRect(0,0,W,H);var bars=64;var bw=W/bars;for(var i=0;i<bars;i++){var h=2+Math.random()*3;ctx.fillStyle='rgba(255,107,0,0.08)';ctx.fillRect(i*bw+1,H/2-h/2,bw-2,h)}raf=requestAnimationFrame(drawIdle)}
-drawIdle();
-window._freqConnect=function(audio,name){
-if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-if(!analyser){analyser=audioCtx.createAnalyser();analyser.fftSize=256;analyser.smoothingTimeConstant=.8}
-if(connected!==audio){if(src)try{src.disconnect()}catch(e){}src=audioCtx.createMediaElementSource(audio);src.connect(analyser);analyser.connect(audioCtx.destination);connected=audio}
-if(trackLabel)trackLabel.textContent=name||'Playing';
-if(idle)idle.classList.add('hidden');
-if(raf)cancelAnimationFrame(raf);
-var data=new Uint8Array(analyser.frequencyBinCount);
-function draw(){raf=requestAnimationFrame(draw);analyser.getByteFrequencyData(data);ctx.clearRect(0,0,W,H);var bars=data.length;var bw=W/bars;for(var i=0;i<bars;i++){var v=data[i]/255;var h=v*H*.85;var hue=20+v*25;ctx.fillStyle='hsla('+hue+',100%,'+(45+v*20)+'%,'+(0.4+v*.5)+')';ctx.shadowColor='rgba(255,107,0,'+(v*.3).toFixed(2)+')';ctx.shadowBlur=v*8;ctx.fillRect(i*bw+1,H-h,bw-2,h);ctx.shadowBlur=0}}draw()};
-window._freqDisconnect=function(){if(idle)idle.classList.remove('hidden');if(trackLabel)trackLabel.textContent='\u2014';if(raf)cancelAnimationFrame(raf);drawIdle()}})();
 
 /* ═══ LETTERS TO TAE ═══ */
 (function(){var wall=document.getElementById('lettersWall');var nameI=document.getElementById('letterName');var msgI=document.getElementById('letterMsg');var sendBtn=document.getElementById('letterSend');var toast=document.getElementById('letterToast');if(!wall||!sendBtn)return;
