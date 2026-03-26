@@ -1175,7 +1175,7 @@ function generateShareImage(){
     var ctx=c.getContext('2d');
     
     // Background — dark gradient matching site
-    var bg=ctx.createRadialGradient(540,960,0,540,960,960);
+    var bg=ctx.createRadialGradient(540,960,0,540,960,1100);
     bg.addColorStop(0,'#1a0800');
     bg.addColorStop(0.5,'#0a0400');
     bg.addColorStop(1,'#000000');
@@ -1183,77 +1183,77 @@ function generateShareImage(){
     ctx.fillRect(0,0,1080,1920);
     
     // Subtle orange glow
-    var glow=ctx.createRadialGradient(540,960,0,540,960,600);
-    glow.addColorStop(0,'rgba(255,107,0,0.12)');
+    var glow=ctx.createRadialGradient(540,960,0,540,960,800);
+    glow.addColorStop(0,'rgba(255,107,0,0.18)');
     glow.addColorStop(1,'rgba(255,107,0,0)');
     ctx.fillStyle=glow;
     ctx.fillRect(0,0,1080,1920);
     
     // Vault lock icon
     ctx.save();
-    ctx.translate(540,760);
+    ctx.translate(540,680);
     ctx.strokeStyle='rgba(255,215,0,0.6)';
-    ctx.lineWidth=6;
+    ctx.lineWidth=8;
     ctx.beginPath();
-    ctx.arc(0,-30,35,Math.PI,0);
+    ctx.arc(0,-50,55,Math.PI,0);
     ctx.stroke();
     ctx.fillStyle='rgba(255,215,0,0.15)';
     ctx.strokeStyle='rgba(255,215,0,0.5)';
     ctx.lineWidth=3;
     ctx.beginPath();
-    ctx.roundRect(-40,0,80,60,12);
+    ctx.roundRect(-60,0,120,90,16);
     ctx.fill();ctx.stroke();
     ctx.fillStyle='rgba(255,215,0,0.8)';
     ctx.beginPath();
-    ctx.arc(0,22,8,0,Math.PI*2);
+    ctx.arc(0,35,12,0,Math.PI*2);
     ctx.fill();
     ctx.restore();
     
     // "I UNLOCKED THE VAULT"
     ctx.textAlign='center';
     ctx.fillStyle='rgba(255,255,255,0.35)';
-    ctx.font='600 22px Oswald, sans-serif';
+    ctx.font='600 32px Oswald, sans-serif';
     ctx.letterSpacing='6px';
-    ctx.fillText('I UNLOCKED THE VAULT',540,920);
+    ctx.fillText('I UNLOCKED THE VAULT',540,870);
     
     // "FREETAE" — big logo
     ctx.fillStyle='#FF6B00';
-    ctx.font='900 120px Bebas Neue, sans-serif';
+    ctx.font='900 180px Bebas Neue, sans-serif';
     ctx.letterSpacing='12px';
     ctx.shadowColor='rgba(255,107,0,0.5)';
-    ctx.shadowBlur=40;
-    ctx.fillText('FREETAE',540,1080);
+    ctx.shadowBlur=60;
+    ctx.fillText('FREETAE',540,1060);
     ctx.shadowBlur=0;
     
     // "SIGN LANGUAGE"
     ctx.fillStyle='#FFD700';
-    ctx.font='700 42px Oswald, sans-serif';
-    ctx.letterSpacing='8px';
+    ctx.font='700 56px Oswald, sans-serif';
+    ctx.letterSpacing='10px';
     ctx.fillText('SIGN LANGUAGE',540,1160);
     
     // Divider line
     ctx.strokeStyle='rgba(255,107,0,0.4)';
     ctx.lineWidth=2;
     ctx.beginPath();
-    ctx.moveTo(400,1210);
-    ctx.lineTo(680,1210);
+    ctx.moveTo(340,1220);
+    ctx.lineTo(740,1220);
     ctx.stroke();
     
     // "DROPPING JULY 17, 2026"
     ctx.fillStyle='rgba(255,255,255,0.6)';
-    ctx.font='600 24px Oswald, sans-serif';
-    ctx.letterSpacing='4px';
-    ctx.fillText('DROPPING JULY 17, 2026',540,1260);
+    ctx.font='600 34px Oswald, sans-serif';
+    ctx.letterSpacing='6px';
+    ctx.fillText('DROPPING JULY 17, 2026',540,1290);
     
     // "freetae.com" at bottom
     ctx.fillStyle='rgba(255,255,255,0.3)';
-    ctx.font='400 20px Rajdhani, sans-serif';
-    ctx.letterSpacing='3px';
-    ctx.fillText('FREETAE.COM',540,1360);
+    ctx.font='600 28px Rajdhani, sans-serif';
+    ctx.letterSpacing='5px';
+    ctx.fillText('FREETAE.COM',540,1380);
     
     // "SWIPE UP" arrow hint at very bottom
     ctx.fillStyle='rgba(255,215,0,0.4)';
-    ctx.font='600 16px Oswald, sans-serif';
+    ctx.font='600 22px Oswald, sans-serif';
     ctx.letterSpacing='4px';
     ctx.fillText('TAP TO VISIT',540,1750);
     
