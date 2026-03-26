@@ -435,6 +435,8 @@ textarea.letter-input{resize:none;min-height:80px}
 .vault-share-btn{display:block;margin:20px auto 0;padding:12px 32px;border-radius:99px;font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,var(--primary),#ff8a3a);color:#000;box-shadow:0 8px 24px rgba(255,107,0,.25);transition:transform .2s,box-shadow .2s}
 .vault-share-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,0,.35)}
 .vault-share-btn:active{transform:translateY(1px)}
+
+.particle-canvas{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.7}
 </style>
 </head>
 <body class="has-intro">
@@ -1369,6 +1371,156 @@ sendBtn.addEventListener('click',function(){
   msgI.value='';nameI.value='';
   if(toast){toast.textContent='Letter sent \u2714';setTimeout(function(){toast.textContent=''},2500)}
   sendBtn.disabled=true;setTimeout(function(){sendBtn.disabled=false},3000);
+});
+})();
+
+
+/* ═══ CURSOR / TOUCH PARTICLE TRAIL ═══ */
+(function(){
+if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+var c=document.createElement('canvas');
+c.className='particle-canvas';
+document.body.appendChild(c);
+var ctx=c.getContext('2d');
+var dpr=Math.min(window.devicePixelRatio||1,2);
+var w,h;
+function resize(){
+  w=window.innerWidth;h=window.innerHeight;
+  c.width=w*dpr;c.height=h*dpr;
+  c.style.width=w+'px';c.style.height=h+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+resize();
+window.addEventListener('resize',resize,{passive:true});
+
+var particles=[];
+var mx=-999,my=-999;
+var active=false;
+var lastEmit=0;
+
+function emit(x,y){
+  var now=Date.now();
+  if(now-lastEmit<25)return;
+  lastEmit=now;
+  for(var i=0;i<3;i++){
+    particles.push({
+      x:x,y:y,
+      vx:(Math.random()-.5)*2,
+      vy:(Math.random()-.5)*2-1,
+      life:1,
+      decay:.015+Math.random()*.02,
+      size:2+Math.random()*3,
+      hue:Math.random()>.5?25:45
+    });
+  }
+  if(particles.length>80)particles.splice(0,particles.length-80);
+}
+
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  for(var i=particles.length-1;i>=0;i--){
+    var p=particles[i];
+    p.x+=p.vx;
+    p.y+=p.vy;
+    p.vy+=.03;
+    p.life-=p.decay;
+    if(p.life<=0){particles.splice(i,1);continue}
+    var a=p.life*p.life;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2);
+    ctx.fillStyle='hsla('+p.hue+',100%,55%,'+a.toFixed(3)+')';
+    ctx.fill();
+  }
+  if(particles.length>0||active)requestAnimationFrame(draw);
+  else active=false;
+}
+
+function start(){if(!active){active=true;requestAnimationFrame(draw)}}
+
+document.addEventListener('mousemove',function(e){
+  emit(e.clientX,e.clientY);start();
+},{passive:true});
+
+document.addEventListener('touchmove',function(e){
+  var t=e.touches[0];
+  if(t){emit(t.clientX,t.clientY);start()}
+},{passive:true});
+
+// Don't run on scroll to save performance
+var scrolling=false;var scrollT;
+window.addEventListener('scroll',function(){
+  scrolling=true;clearTimeout(scrollT);
+  scrollT=setTimeout(function(){scrolling=false},150);
+},{passive:true});
+})();
+
+
+/* ═══ EASTER EGG: SECRET SNIPPET ═══ */
+(function(){
+var logo=document.querySelector('.logo');
+if(!logo)return;
+var taps=0;
+var tapTimer=null;
+var unlocked=false;
+var audio=null;
+
+// Create hidden audio element
+function createAudio(){
+  if(audio)return;
+  audio=document.createElement('audio');
+  audio.preload='none';
+  audio.src='assets/easter-egg-snippet.mp4';
+  audio.style.display='none';
+  document.body.appendChild(audio);
+}
+
+logo.addEventListener('click',function(){
+  if(unlocked)return;
+  taps++;
+  clearTimeout(tapTimer);
+  
+  if(taps>=5){
+    taps=0;
+    unlocked=true;
+    
+    // Visual feedback
+    logo.style.transition='all .4s ease';
+    logo.style.textShadow='0 0 60px rgba(255,215,0,1),0 0 120px rgba(255,215,0,.6)';
+    logo.style.color='#FFD700';
+    
+    // Show message
+    var msg=document.createElement('div');
+    msg.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:20000;padding:24px 40px;border-radius:16px;background:rgba(0,0,0,.92);border:1px solid rgba(255,215,0,.4);color:#FFD700;font-family:Oswald,sans-serif;font-size:16px;letter-spacing:3px;text-transform:uppercase;text-align:center;backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(0,0,0,.8);opacity:0;transition:opacity .4s';
+    msg.innerHTML='\uD83D\uDD13 HIDDEN TRACK UNLOCKED<br><span style="font-size:11px;color:rgba(255,255,255,.6);letter-spacing:2px;margin-top:8px;display:block">CLEAN VERSION PREVIEW</span>';
+    document.body.appendChild(msg);
+    requestAnimationFrame(function(){msg.style.opacity='1'});
+    
+    // Play the hidden snippet
+    createAudio();
+    audio.play().catch(function(){});
+    
+    // Track it
+    fetch('https://api.freetae.com/api/vault-unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ts:Date.now(),type:'easter_egg'})}).catch(function(){});
+    
+    // Reset after clip ends or 30s
+    var cleanup=function(){
+      msg.style.opacity='0';
+      setTimeout(function(){msg.remove()},500);
+      logo.style.textShadow='';
+      logo.style.color='';
+      setTimeout(function(){unlocked=false},2000);
+    };
+    audio.addEventListener('ended',cleanup,{once:true});
+    setTimeout(cleanup,35000);
+    
+  }else{
+    // Visual tap feedback
+    logo.style.transition='transform .1s';
+    logo.style.transform='scale(1.04)';
+    setTimeout(function(){logo.style.transform=''},100);
+    
+    tapTimer=setTimeout(function(){taps=0},1500);
+  }
 });
 })();
 </script>
