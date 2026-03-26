@@ -761,15 +761,7 @@ Screenshot this. Share it. Tell them you had access before anyone.<br><br>
 <div class="ledger-total-label">Raised by listeners</div>
 <div class="ledger-bar"><div class="ledger-fill" id="ledgerFill" style="width:0%"></div></div>
 <div class="ledger-goal"><span>$0</span><span>Goal: $10,000</span></div>
-<div class="ledger-recent" id="ledgerRecent">
-<div class="ledger-entry"><div class="ledger-avatar">D</div><div class="ledger-name">Anonymous</div><div class="ledger-amt">$25</div></div>
-<div class="ledger-entry"><div class="ledger-avatar">K</div><div class="ledger-name">Kenji</div><div class="ledger-amt">$50</div></div>
-<div class="ledger-entry"><div class="ledger-avatar">M</div><div class="ledger-name">Marcus T.</div><div class="ledger-amt">$15</div></div>
-<div class="ledger-entry"><div class="ledger-avatar">J</div><div class="ledger-name">Jay from Chi</div><div class="ledger-amt">$10</div></div>
-<div class="ledger-entry"><div class="ledger-avatar">R</div><div class="ledger-name">Ree</div><div class="ledger-amt">$8</div></div>
-<div class="ledger-entry"><div class="ledger-avatar">T</div><div class="ledger-name">Anonymous</div><div class="ledger-amt">$5</div></div>
-<div class="ledger-entry"><div class="ledger-avatar">E</div><div class="ledger-name">Eddie Acosta</div><div class="ledger-amt">$1</div></div>
-</div>
+<div class="ledger-recent" id="ledgerRecent"><div class="ledger-loading" style="text-align:center;color:rgba(255,255,255,.3);font-size:12px;padding:12px">Loading supporters...</div></div>
 <div class="ledger-cta"><button class="btn btn-gold js-support">Support The Music</button></div>
 <div class="ledger-note">100% funds go directly to music production, distribution, and TierOneRecords operations. Every dollar is accounted for.</div>
 </div>
@@ -995,15 +987,51 @@ msgI.value='';nameI.value='';if(toast){toast.textContent='Letter sent \u2714';se
 sendBtn.disabled=true;setTimeout(function(){sendBtn.disabled=false},3000)})})();
 
 /* ═══ LEDGER ═══ */
-/* ═══ LEDGER ═══ */
-(function(){var totalEl=document.getElementById('ledgerTotal');var fillEl=document.getElementById('ledgerFill');if(!totalEl||!fillEl)return;
-var amount=114;var goal=10000;/* update these manually or via API */
-var pct=Math.min(100,(amount/goal*100)).toFixed(1);
-/* animate count up */
-var cur=0;var step=Math.max(1,Math.floor(amount/40));
-function tick(){cur=Math.min(cur+step,amount);totalEl.textContent='$'+cur.toLocaleString();if(cur<amount)requestAnimationFrame(tick)}
-var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){tick();fillEl.style.width=pct+'%';io.disconnect()}},{threshold:.3});
-io.observe(totalEl)})();
+/* ═══ LEDGER (live from API) ═══ */
+(function(){
+var totalEl=document.getElementById('ledgerTotal');
+var fillEl=document.getElementById('ledgerFill');
+var recentEl=document.getElementById('ledgerRecent');
+if(!totalEl||!fillEl) return;
+
+fetch('https://api.freetae.com/api/ledger?key=ftapi-acd5352d7fbe03b084523b3b81da649f9c893e76')
+.then(function(r){return r.json()})
+.then(function(data){
+  var amount=data.total||0;
+  var goal=data.goal||10000;
+  var pct=Math.min(100,(amount/goal*100)).toFixed(1);
+
+  // Animate count up
+  var cur=0;var step=Math.max(1,Math.floor(amount/40));
+  function tick(){
+    cur=Math.min(cur+step,amount);
+    totalEl.textContent='$'+cur.toLocaleString();
+    if(cur<amount) requestAnimationFrame(tick);
+  }
+  
+  var io=new IntersectionObserver(function(e){
+    if(e[0].isIntersecting){tick();fillEl.style.width=pct+'%';io.disconnect()}
+  },{threshold:.3});
+  io.observe(totalEl);
+
+  // Render supporters
+  if(recentEl && data.supporters){
+    recentEl.innerHTML='';
+    data.supporters.forEach(function(s){
+      var d=document.createElement('div');
+      d.className='ledger-entry';
+      d.innerHTML='<div class="ledger-avatar">'+s.initial+'</div><div class="ledger-name">'+s.name+'</div><div class="ledger-amt">$'+s.amount+'</div>';
+      recentEl.appendChild(d);
+    });
+  }
+})
+.catch(function(){
+  // Fallback if API is down
+  totalEl.textContent='$114';
+  fillEl.style.width='1.1%';
+  if(recentEl) recentEl.innerHTML='<div style="text-align:center;color:rgba(255,255,255,.3);font-size:12px">Unable to load supporters</div>';
+});
+})();
 
 
 
