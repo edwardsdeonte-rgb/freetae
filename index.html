@@ -1167,19 +1167,152 @@ fetch('https://api.freetae.com/api/social-proof').then(function(r){return r.json
 (function(){
 var shareBtn=document.getElementById('vaultShare');
 if(!shareBtn)return;
-shareBtn.addEventListener('click',function(){
-  var text='I just unlocked the vault on freetae.com 🔓🔥 SIGN LANGUAGE dropping July 17, 2026';
-  var url='https://freetae.com';
-  if(navigator.share){
-    navigator.share({title:'FREETAE - Vault Unlocked',text:text,url:url}).catch(function(){});
-  }else{
-    navigator.clipboard.writeText(text+' '+url).then(function(){
-      shareBtn.textContent='Link Copied ✓';
-      setTimeout(function(){shareBtn.textContent='Share This'},2000);
-    }).catch(function(){
-      window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text+' '+url),'_blank');
-    });
+
+function generateShareImage(){
+  return new Promise(function(resolve){
+    var c=document.createElement('canvas');
+    c.width=1080;c.height=1920;
+    var ctx=c.getContext('2d');
+    
+    // Background — dark gradient matching site
+    var bg=ctx.createRadialGradient(540,700,0,540,700,900);
+    bg.addColorStop(0,'#1a0800');
+    bg.addColorStop(0.5,'#0a0400');
+    bg.addColorStop(1,'#000000');
+    ctx.fillStyle=bg;
+    ctx.fillRect(0,0,1080,1920);
+    
+    // Subtle orange glow
+    var glow=ctx.createRadialGradient(540,750,0,540,750,500);
+    glow.addColorStop(0,'rgba(255,107,0,0.12)');
+    glow.addColorStop(1,'rgba(255,107,0,0)');
+    ctx.fillStyle=glow;
+    ctx.fillRect(0,0,1080,1920);
+    
+    // Vault lock icon
+    ctx.save();
+    ctx.translate(540,640);
+    ctx.strokeStyle='rgba(255,215,0,0.6)';
+    ctx.lineWidth=6;
+    ctx.beginPath();
+    ctx.arc(0,-30,35,Math.PI,0);
+    ctx.stroke();
+    ctx.fillStyle='rgba(255,215,0,0.15)';
+    ctx.strokeStyle='rgba(255,215,0,0.5)';
+    ctx.lineWidth=3;
+    ctx.beginPath();
+    ctx.roundRect(-40,0,80,60,12);
+    ctx.fill();ctx.stroke();
+    ctx.fillStyle='rgba(255,215,0,0.8)';
+    ctx.beginPath();
+    ctx.arc(0,22,8,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+    
+    // "I UNLOCKED THE VAULT"
+    ctx.textAlign='center';
+    ctx.fillStyle='rgba(255,255,255,0.35)';
+    ctx.font='600 22px Oswald, sans-serif';
+    ctx.letterSpacing='6px';
+    ctx.fillText('I UNLOCKED THE VAULT',540,790);
+    
+    // "FREETAE" — big logo
+    ctx.fillStyle='#FF6B00';
+    ctx.font='900 120px Bebas Neue, sans-serif';
+    ctx.letterSpacing='12px';
+    ctx.shadowColor='rgba(255,107,0,0.5)';
+    ctx.shadowBlur=40;
+    ctx.fillText('FREETAE',540,940);
+    ctx.shadowBlur=0;
+    
+    // "SIGN LANGUAGE"
+    ctx.fillStyle='#FFD700';
+    ctx.font='700 42px Oswald, sans-serif';
+    ctx.letterSpacing='8px';
+    ctx.fillText('SIGN LANGUAGE',540,1020);
+    
+    // Divider line
+    ctx.strokeStyle='rgba(255,107,0,0.4)';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(400,1070);
+    ctx.lineTo(680,1070);
+    ctx.stroke();
+    
+    // "DROPPING JULY 17, 2026"
+    ctx.fillStyle='rgba(255,255,255,0.6)';
+    ctx.font='600 24px Oswald, sans-serif';
+    ctx.letterSpacing='4px';
+    ctx.fillText('DROPPING JULY 17, 2026',540,1120);
+    
+    // "freetae.com" at bottom
+    ctx.fillStyle='rgba(255,255,255,0.3)';
+    ctx.font='400 20px Rajdhani, sans-serif';
+    ctx.letterSpacing='3px';
+    ctx.fillText('FREETAE.COM',540,1220);
+    
+    // "SWIPE UP" arrow hint at very bottom
+    ctx.fillStyle='rgba(255,215,0,0.4)';
+    ctx.font='600 16px Oswald, sans-serif';
+    ctx.letterSpacing='4px';
+    ctx.fillText('TAP TO VISIT',540,1750);
+    
+    // Small arrow
+    ctx.strokeStyle='rgba(255,215,0,0.3)';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(520,1770);ctx.lineTo(540,1785);ctx.lineTo(560,1770);
+    ctx.stroke();
+    
+    c.toBlob(function(blob){resolve(blob)},'image/png',1);
+  });
+}
+
+shareBtn.addEventListener('click',async function(){
+  shareBtn.textContent='Creating...';
+  shareBtn.disabled=true;
+  
+  try{
+    var blob=await generateShareImage();
+    var file=new File([blob],'freetae-vault-unlocked.png',{type:'image/png'});
+    var shareText='I just unlocked the vault on freetae.com \uD83D\uDD13\uD83D\uDD25 SIGN LANGUAGE dropping July 17, 2026';
+    var shareUrl='https://freetae.com';
+    
+    // Try native share with image (works on mobile)
+    if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({
+        title:'FREETAE - Vault Unlocked',
+        text:shareText,
+        url:shareUrl,
+        files:[file]
+      });
+      shareBtn.textContent='Shared \u2714';
+    }else{
+      // Fallback: download image + copy link
+      var a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);
+      a.download='freetae-vault-unlocked.png';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      
+      try{
+        await navigator.clipboard.writeText(shareText+' '+shareUrl);
+        shareBtn.textContent='Saved + Link Copied \u2714';
+      }catch(e){
+        shareBtn.textContent='Image Saved \u2714';
+      }
+    }
+  }catch(e){
+    // If share was cancelled or failed
+    if(e.name!=='AbortError'){
+      shareBtn.textContent='Try Again';
+    }else{
+      shareBtn.textContent='Share This';
+    }
   }
+  
+  shareBtn.disabled=false;
+  setTimeout(function(){shareBtn.textContent='Share This'},3000);
 });
 })();
 
