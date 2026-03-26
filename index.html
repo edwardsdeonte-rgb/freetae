@@ -436,7 +436,6 @@ textarea.letter-input{resize:none;min-height:80px}
 .vault-share-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,0,.35)}
 .vault-share-btn:active{transform:translateY(1px)}
 
-.particle-canvas{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.7}
 </style>
 </head>
 <body class="has-intro">
@@ -1375,84 +1374,7 @@ sendBtn.addEventListener('click',function(){
 })();
 
 
-/* ═══ CURSOR / TOUCH PARTICLE TRAIL ═══ */
-(function(){
-if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-var c=document.createElement('canvas');
-c.className='particle-canvas';
-document.body.appendChild(c);
-var ctx=c.getContext('2d');
-var dpr=Math.min(window.devicePixelRatio||1,2);
-var w,h;
-function resize(){
-  w=window.innerWidth;h=window.innerHeight;
-  c.width=w*dpr;c.height=h*dpr;
-  c.style.width=w+'px';c.style.height=h+'px';
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-}
-resize();
-window.addEventListener('resize',resize,{passive:true});
 
-var particles=[];
-var mx=-999,my=-999;
-var active=false;
-var lastEmit=0;
-
-function emit(x,y){
-  var now=Date.now();
-  if(now-lastEmit<25)return;
-  lastEmit=now;
-  for(var i=0;i<3;i++){
-    particles.push({
-      x:x,y:y,
-      vx:(Math.random()-.5)*2,
-      vy:(Math.random()-.5)*2-1,
-      life:1,
-      decay:.015+Math.random()*.02,
-      size:2+Math.random()*3,
-      hue:Math.random()>.5?25:45
-    });
-  }
-  if(particles.length>80)particles.splice(0,particles.length-80);
-}
-
-function draw(){
-  ctx.clearRect(0,0,w,h);
-  for(var i=particles.length-1;i>=0;i--){
-    var p=particles[i];
-    p.x+=p.vx;
-    p.y+=p.vy;
-    p.vy+=.03;
-    p.life-=p.decay;
-    if(p.life<=0){particles.splice(i,1);continue}
-    var a=p.life*p.life;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2);
-    ctx.fillStyle='hsla('+p.hue+',100%,55%,'+a.toFixed(3)+')';
-    ctx.fill();
-  }
-  if(particles.length>0||active)requestAnimationFrame(draw);
-  else active=false;
-}
-
-function start(){if(!active){active=true;requestAnimationFrame(draw)}}
-
-document.addEventListener('mousemove',function(e){
-  emit(e.clientX,e.clientY);start();
-},{passive:true});
-
-document.addEventListener('touchmove',function(e){
-  var t=e.touches[0];
-  if(t){emit(t.clientX,t.clientY);start()}
-},{passive:true});
-
-// Don't run on scroll to save performance
-var scrolling=false;var scrollT;
-window.addEventListener('scroll',function(){
-  scrolling=true;clearTimeout(scrollT);
-  scrollT=setTimeout(function(){scrolling=false},150);
-},{passive:true});
-})();
 
 
 /* ═══ EASTER EGG: SECRET SNIPPET ═══ */
@@ -1511,7 +1433,7 @@ logo.addEventListener('click',function(){
       setTimeout(function(){unlocked=false},2000);
     };
     audio.addEventListener('ended',cleanup,{once:true});
-    setTimeout(cleanup,35000);
+    setTimeout(cleanup,210000);
     
   }else{
     // Visual tap feedback
