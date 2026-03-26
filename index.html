@@ -87,12 +87,14 @@ html.intro-lock,html.intro-lock body{overflow:hidden}
 .hero-cta{margin-top:36px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .hero-support{margin-top:14px;font-size:12px;color:rgba(255,255,255,.25);letter-spacing:.5px;line-height:1.6;opacity:0;animation:heroFadeIn 1s ease .8s forwards}
 @keyframes heroFadeIn{to{opacity:1}}
-.hero-arrow{position:absolute;bottom:max(24px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.3);animation:hFloat 2s ease-in-out infinite}
-.hero-arrow-text{font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);opacity:0;animation:hintFadeIn 1s ease 2.5s forwards}
+.hero-arrow{position:absolute;bottom:max(32px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;color:rgba(255,255,255,.85);animation:hFloat 2s ease-in-out infinite;padding:16px;cursor:pointer;background:none;border:none;outline:none}
+.hero-arrow-ring{position:absolute;width:72px;height:72px;border-radius:50%;border:2px solid rgba(255,107,0,.35);animation:arrowPulse 2s ease-in-out infinite;pointer-events:none}
+@keyframes arrowPulse{0%,100%{transform:scale(.9);opacity:.4;border-color:rgba(255,107,0,.3)}50%{transform:scale(1.15);opacity:.8;border-color:rgba(255,215,0,.5)}}
+.hero-arrow-text{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,215,0,.7);opacity:0;animation:hintFadeIn 1s ease 1.5s forwards;text-shadow:0 0 10px rgba(255,107,0,.3)}
 @keyframes hintFadeIn{to{opacity:1}}
 @keyframes hFloat{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(10px)}}
 .hero-arrow{transition:opacity .4s cubic-bezier(.16,1,.3,1)}
-.hero-arrow svg{transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.hero-arrow svg{transition:transform .3s cubic-bezier(.16,1,.3,1);filter:drop-shadow(0 0 8px rgba(255,107,0,.4))}
 .hero-arrow:active svg{transform:translateY(4px)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:99px;font-family:var(--label);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:transform .3s var(--ease),box-shadow .3s,filter .3s;-webkit-tap-highlight-color:transparent}
 .btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
@@ -456,7 +458,11 @@ textarea.letter-input{resize:none;min-height:80px}
 </div>
 <div class="hero-support">Self-funded. Self-owned.<br>Powered by listeners, not labels.</div>
 </div>
-<button class="hero-arrow" aria-label="Scroll down" type="button"><span class="hero-arrow-text" data-desktop="Scroll Down" data-mobile="Swipe Down">Scroll Down</span><svg width="32" height="20" viewBox="0 0 34 20" fill="none"><path d="M3 3L17 17L31 3" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<button class="hero-arrow" aria-label="Scroll down" type="button">
+<span class="hero-arrow-text" data-desktop="Scroll Down" data-mobile="Swipe Down">Scroll Down</span>
+<div class="hero-arrow-ring"></div>
+<svg width="44" height="28" viewBox="0 0 44 28" fill="none"><path d="M4 4L22 22L40 4" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
 </header>
 
 <div class="divider"></div>
