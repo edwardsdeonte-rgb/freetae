@@ -460,20 +460,36 @@ textarea.letter-input{resize:none;min-height:80px}
 .tl-blurred:hover{filter:blur(12px) brightness(.8)}
 
 
-/* ═══ CLICKABLE GALLERY + LIGHTBOX ═══ */
+
+/* ═══ TIMELINE OVERRIDE: single column, clean ═══ */
+.tl-wrap{max-width:640px}
+.tl-wrap::before{left:24px}
+.tl-dot{left:24px}
+.tl-item,.tl-item:nth-child(odd){flex-direction:column}
+.tl-content,.tl-item:nth-child(odd) .tl-content{width:100%;text-align:left;padding-left:52px;padding-right:0}
+.tl-item:nth-child(odd) .tl-img{margin-left:0}
+.tl-item:nth-child(odd) .tl-gallery{justify-content:flex-start}
+.tl-img{max-width:100%;cursor:pointer}
+
+/* ═══ GALLERY THUMBS ═══ */
 .tl-thumb{cursor:pointer;transition:transform .2s,border-color .2s;border:2px solid transparent;border-radius:8px}
 .tl-thumb:hover{transform:scale(1.08);border-color:rgba(255,107,0,.4)}
 .tl-thumb:active{transform:scale(.95)}
-.tl-img{cursor:pointer;transition:transform .2s;border-radius:var(--radius,16px)}
-.tl-img:hover{transform:scale(1.01)}
-.tl-lightbox{position:fixed;inset:0;z-index:30000;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.tl-img.swap-out{opacity:0;transition:opacity .15s}
+.tl-img.swap-in{transition:opacity .25s}
+
+/* ═══ LIGHTBOX ═══ */
+.tl-lightbox{position:fixed;inset:0;z-index:30000;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .tl-lightbox.active{opacity:1;pointer-events:auto}
 .tl-lightbox img{max-width:92vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.6)}
-.tl-lightbox-close{position:absolute;top:16px;right:20px;font-size:32px;color:rgba(255,255,255,.7);cursor:pointer;z-index:2;font-family:system-ui;line-height:1;padding:8px;transition:color .2s}
+.tl-lightbox-close{position:absolute;top:16px;right:20px;font-size:32px;color:rgba(255,255,255,.7);cursor:pointer;z-index:2;font-family:system-ui;padding:8px;transition:color .2s}
 .tl-lightbox-close:hover{color:#fff}
 
 /* ═══ TIMELINE VIDEO ═══ */
-.tl-video{width:100%;border-radius:var(--radius,16px);aspect-ratio:16/9;object-fit:cover}
+.tl-video{width:100%;border-radius:var(--radius,16px);aspect-ratio:16/9;object-fit:cover;cursor:default}
+
+/* ═══ BLUR ═══ */
+.tl-blurred{filter:blur(18px) brightness(.7);transition:filter .5s;cursor:default}
 </style>
 </head>
 <body class="has-intro">
@@ -607,7 +623,7 @@ Screenshot this. Share it. Tell them you had access before anyone.<br><br>
 <div class="tl-year">Long Beach, CA</div>
 <div class="tl-title">Where It Started</div>
 <div class="tl-desc">Born and raised in Long Beach.</div>
-<img alt="Young Deonte Edwards" class="tl-img" loading="lazy" src="assets/timeline/tl-baby-deonte.webp?v=1774495747"/>
+<img alt="Young Deonte Edwards" class="tl-img" loading="lazy" src="assets/timeline/tl-baby-deonte.webp?v=1774496199"/>
 </div>
 </div>
 
@@ -626,14 +642,14 @@ Screenshot this. Share it. Tell them you had access before anyone.<br><br>
 <div class="tl-year">2014 — 2017</div>
 <div class="tl-title">Industry Connections</div>
 <div class="tl-desc"></div>
-<img alt="Deonte Edwards 2016" class="tl-img" loading="lazy" src="assets/timeline/tl-main-photo-2016.webp?v=1774495747"/>
+<img alt="Deonte Edwards 2016" class="tl-img" loading="lazy" src="assets/timeline/tl-main-photo-2016.webp?v=1774496199"/>
 <div class="tl-gallery">
-<img alt="At Revolt Studios" class="tl-thumb" loading="lazy" src="assets/timeline/tl-revolt-2013.webp?v=1774495747"/>
-<img alt="2015" class="tl-thumb" loading="lazy" src="assets/timeline/tl-2015.webp?v=1774495747"/>
-<img alt="With Iggy Azalea" class="tl-thumb" loading="lazy" src="assets/timeline/tl-iggy-azalea.webp?v=1774495747"/>
-<img alt="With Nipsey Hussle" class="tl-thumb" loading="lazy" src="assets/timeline/tl-nipsey-hussle.webp?v=1774495747"/>
-<img alt="2017" class="tl-thumb" loading="lazy" src="assets/timeline/tl-2017.webp?v=1774495747"/>
-<img alt="2017" class="tl-thumb" loading="lazy" src="assets/timeline/tl-2017-secondary.webp?v=1774495747"/>
+<img alt="At Revolt Studios" class="tl-thumb" loading="lazy" src="assets/timeline/tl-revolt-2013.webp?v=1774496199"/>
+<img alt="2015" class="tl-thumb" loading="lazy" src="assets/timeline/tl-2015.webp?v=1774496199"/>
+<img alt="With Iggy Azalea" class="tl-thumb" loading="lazy" src="assets/timeline/tl-iggy-azalea.webp?v=1774496199"/>
+<img alt="With Nipsey Hussle" class="tl-thumb" loading="lazy" src="assets/timeline/tl-nipsey-hussle.webp?v=1774496199"/>
+<img alt="2017" class="tl-thumb" loading="lazy" src="assets/timeline/tl-2017.webp?v=1774496199"/>
+<img alt="2017" class="tl-thumb" loading="lazy" src="assets/timeline/tl-2017-secondary.webp?v=1774496199"/>
 </div>
 </div>
 </div>
@@ -644,10 +660,10 @@ Screenshot this. Share it. Tell them you had access before anyone.<br><br>
 <div class="tl-year">August 2018</div>
 <div class="tl-title">TierOneRecords Founded</div>
 <div class="tl-desc">Built the label from nothing. No middlemen. Full creative and business control. Self-funded, self-owned.</div>
-<img alt="TierOneRecords founded August 2018" class="tl-img" loading="lazy" src="assets/timeline/tl-red-logo.webp?v=1774495747"/>
+<img alt="TierOneRecords founded August 2018" class="tl-img" loading="lazy" src="assets/timeline/tl-red-logo.webp?v=1774496199"/>
 <div class="tl-gallery">
-<img alt="TierOneRecords founded 2018" class="tl-thumb" loading="lazy" src="assets/timeline/tl-aug-2018-tierone-founded.webp?v=1774495747"/>
-<img alt="Deonte with Famous Far and Keilo" class="tl-thumb" loading="lazy" src="assets/timeline/tl-famous-far-keilo.webp?v=1774495747"/>
+<img alt="TierOneRecords founded 2018" class="tl-thumb" loading="lazy" src="assets/timeline/tl-aug-2018-tierone-founded.webp?v=1774496199"/>
+<img alt="Deonte with Famous Far and Keilo" class="tl-thumb" loading="lazy" src="assets/timeline/tl-famous-far-keilo.webp?v=1774496199"/>
 </div>
 </div>
 </div>
@@ -660,7 +676,7 @@ Screenshot this. Share it. Tell them you had access before anyone.<br><br>
 <div class="tl-year">2020 — 2022</div>
 <div class="tl-title">The Grind</div>
 <div class="tl-desc"></div>
-<video class="tl-img tl-video" autoplay muted loop playsinline poster="assets/timeline/tl-grind-poster.webp?v=1774495759"><source src="assets/timeline/tl-grind-studio.mp4?v=1774495759" type="video/mp4"></video>
+<video class="tl-img tl-video" autoplay muted loop playsinline poster="assets/timeline/tl-grind-poster.webp?v=1774496199"><source src="assets/timeline/tl-grind-studio.mp4?v=1774496199" type="video/mp4"></video>
 
 </div>
 </div>
@@ -671,7 +687,7 @@ Screenshot this. Share it. Tell them you had access before anyone.<br><br>
 <div class="tl-year">2025</div>
 <div class="tl-title">Locked In</div>
 <div class="tl-desc">Serving a federal sentence. The vision never stopped. TierOneRecords blueprint expanding from confinement. Circumstances don’t dictate direction.</div>
-<img alt="Deonte Edwards 2025" class="tl-img" loading="lazy" src="assets/timeline/tl-current-2025.webp?v=1774495747"/>
+<img alt="Deonte Edwards 2025" class="tl-img" loading="lazy" src="assets/timeline/tl-current-2025.webp?v=1774496199"/>
 </div>
 </div>
 
@@ -681,7 +697,7 @@ Screenshot this. Share it. Tell them you had access before anyone.<br><br>
 <div class="tl-year">2026</div>
 <div class="tl-title">SIGN LANGUAGE</div>
 <div class="tl-desc">Debut single. Written, produced, and engineered by Deonte Edwards. July 17, 2026.</div>
-<img alt="Sign Language cover art" class="tl-img tl-blurred" loading="lazy" src="assets/timeline/tl-sign-language.webp?v=1774495747"/>
+<img alt="Sign Language cover art" class="tl-img tl-blurred" loading="lazy" src="assets/timeline/tl-sign-language.webp?v=1774496199"/>
 </div>
 </div>
 
@@ -959,7 +975,10 @@ io.observe(totalEl)})();
 
 
 
-/* ═══ LIGHTBOX: tap any timeline photo to view full size ═══ */
+
+
+
+/* ═══ GALLERY: thumb click swaps with main, main click opens lightbox ═══ */
 (function(){
 var lb = document.getElementById('tlLightbox');
 var lbImg = document.getElementById('tlLightboxImg');
@@ -975,18 +994,46 @@ function openLB(src, alt){
 function closeLB(){
   lb.classList.remove('active');
   document.body.style.overflow = '';
-  setTimeout(function(){ lbImg.src = ''; }, 300);
 }
-
-// Click any tl-img or tl-thumb to open lightbox
-document.querySelectorAll('.tl-img, .tl-thumb').forEach(function(img){
-  if(img.classList.contains('tl-blurred')) return;
-  img.addEventListener('click', function(){ openLB(this.src, this.alt); });
-});
 
 lbClose.addEventListener('click', closeLB);
 lb.addEventListener('click', function(e){ if(e.target === lb) closeLB(); });
 document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLB(); });
+
+// Main images: click to open lightbox (full uncropped)
+document.querySelectorAll('.tl-img').forEach(function(img){
+  if(img.classList.contains('tl-blurred') || img.tagName === 'VIDEO') return;
+  img.addEventListener('click', function(){ openLB(this.src, this.alt); });
+});
+
+// Thumbnails: click to swap with main image
+document.querySelectorAll('.tl-gallery').forEach(function(gallery){
+  var content = gallery.closest('.tl-content');
+  if(!content) return;
+  var mainImg = content.querySelector('.tl-img');
+  if(!mainImg || mainImg.tagName === 'VIDEO') return;
+
+  gallery.addEventListener('click', function(e){
+    var thumb = e.target.closest('.tl-thumb');
+    if(!thumb) return;
+
+    var thumbSrc = thumb.src;
+    var thumbAlt = thumb.alt;
+    var mainSrc = mainImg.src;
+    var mainAlt = mainImg.alt;
+
+    mainImg.classList.add('swap-out');
+    setTimeout(function(){
+      mainImg.src = thumbSrc;
+      mainImg.alt = thumbAlt;
+      thumb.src = mainSrc;
+      thumb.alt = mainAlt;
+      mainImg.classList.remove('swap-out');
+      mainImg.classList.add('swap-in');
+      setTimeout(function(){ mainImg.classList.remove('swap-in'); }, 300);
+    }, 150);
+  });
+});
 })();
 </script>
 
