@@ -1387,16 +1387,7 @@ var taps=0;
 var tapTimer=null;
 var unlocked=false;
 var audio=null;
-
-// Create hidden audio element
-function createAudio(){
-  if(audio)return;
-  audio=document.createElement('audio');
-  audio.preload='none';
-  audio.src='assets/easter-egg-snippet.mp4';
-  audio.style.display='none';
-  document.body.appendChild(audio);
-}
+var bar=null;
 
 logo.addEventListener('click',function(){
   if(unlocked)return;
@@ -1407,42 +1398,54 @@ logo.addEventListener('click',function(){
     taps=0;
     unlocked=true;
     
-    // Visual feedback
+    // Visual feedback on logo
     logo.style.transition='all .4s ease';
     logo.style.textShadow='0 0 60px rgba(255,215,0,1),0 0 120px rgba(255,215,0,.6)';
     logo.style.color='#FFD700';
     
-    // Show message
-    var msg=document.createElement('div');
-    msg.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:20000;padding:24px 40px;border-radius:16px;background:rgba(0,0,0,.92);border:1px solid rgba(255,215,0,.4);color:#FFD700;font-family:Oswald,sans-serif;font-size:16px;letter-spacing:3px;text-transform:uppercase;text-align:center;backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(0,0,0,.8);opacity:0;transition:opacity .4s';
-    msg.innerHTML='\uD83D\uDD13 HIDDEN TRACK UNLOCKED<br><span style="font-size:11px;color:rgba(255,255,255,.6);letter-spacing:2px;margin-top:8px;display:block">CLEAN VERSION PREVIEW</span>';
-    document.body.appendChild(msg);
-    requestAnimationFrame(function(){msg.style.opacity='1'});
+    // Create minimal now-playing bar at bottom of screen
+    bar=document.createElement('div');
+    bar.style.cssText='position:fixed;bottom:0;left:0;right:0;z-index:20000;padding:14px 18px;display:flex;align-items:center;gap:14px;background:rgba(0,0,0,.95);border-top:1px solid rgba(255,215,0,.3);backdrop-filter:blur(20px);transform:translateY(100%);transition:transform .4s cubic-bezier(.22,1,.36,1)';
     
-    // Play the hidden snippet
-    createAudio();
+    var info=document.createElement('div');
+    info.style.cssText='flex:1;min-width:0';
+    info.innerHTML='<div style="font-family:Oswald,sans-serif;font-size:13px;letter-spacing:2px;color:#FFD700;text-transform:uppercase">HIDDEN TRACK</div><div style="font-family:Rajdhani,sans-serif;font-size:12px;color:rgba(255,255,255,.6);margin-top:2px">Sign Language — Full Version</div>';
+    
+    var closeBtn=document.createElement('button');
+    closeBtn.style.cssText='appearance:none;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:all .2s';
+    closeBtn.textContent='\u2715';
+    closeBtn.addEventListener('click',function(){cleanup()});
+    
+    bar.appendChild(info);
+    bar.appendChild(closeBtn);
+    document.body.appendChild(bar);
+    requestAnimationFrame(function(){bar.style.transform='translateY(0)'});
+    
+    // Play audio
+    audio=document.createElement('audio');
+    audio.preload='none';
+    audio.src='assets/easter-egg-snippet.mp4';
+    document.body.appendChild(audio);
     audio.play().catch(function(){});
     
     // Track it
     fetch('https://api.freetae.com/api/vault-unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ts:Date.now(),type:'easter_egg'})}).catch(function(){});
     
-    // Reset after clip ends or 30s
-    var cleanup=function(){
-      msg.style.opacity='0';
-      setTimeout(function(){msg.remove()},500);
+    // Cleanup function
+    function cleanup(){
+      if(audio){audio.pause();audio.remove();audio=null}
+      if(bar){bar.style.transform='translateY(100%)';setTimeout(function(){bar.remove();bar=null},400)}
       logo.style.textShadow='';
       logo.style.color='';
-      setTimeout(function(){unlocked=false},2000);
-    };
+      setTimeout(function(){unlocked=false},1000);
+    }
+    
     audio.addEventListener('ended',cleanup,{once:true});
-    setTimeout(cleanup,210000);
     
   }else{
-    // Visual tap feedback
     logo.style.transition='transform .1s';
     logo.style.transform='scale(1.04)';
     setTimeout(function(){logo.style.transform=''},100);
-    
     tapTimer=setTimeout(function(){taps=0},1500);
   }
 });
