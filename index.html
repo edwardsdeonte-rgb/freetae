@@ -490,6 +490,19 @@ textarea.letter-input{resize:none;min-height:80px}
 
 /* ═══ BLUR ═══ */
 .tl-blurred{filter:blur(18px) brightness(.7);transition:filter .5s;cursor:default}
+
+/* ═══ VAULT AUDIO PLAYER ═══ */
+.vault-player{margin:20px auto;max-width:360px;padding:16px 20px;background:rgba(255,255,255,.03);border:1px solid rgba(255,107,0,.15);border-radius:14px}
+.vault-player-label{font-family:var(--mono);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--primary);margin-bottom:12px;text-align:center}
+.vault-player-controls{display:flex;align-items:center;gap:12px}
+.vault-play-btn{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#ff8a3a);color:#000;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 16px rgba(255,107,0,.3)}
+.vault-play-btn:hover{transform:scale(1.08)}
+.vault-play-btn:active{transform:scale(.95)}
+.vault-play-btn svg{width:18px;height:18px;margin-left:2px}
+.vault-play-btn.playing svg{margin-left:0}
+.vault-progress-wrap{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;cursor:pointer;position:relative;overflow:hidden}
+.vault-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--gold));border-radius:3px;transition:width .1s linear}
+.vault-time{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.4);min-width:36px;text-align:right}
 </style>
 </head>
 <body class="has-intro">
@@ -604,7 +617,25 @@ textarea.letter-input{resize:none;min-height:80px}
 <div class="vault-reveal-title">YOU&#8217;RE EARLY</div>
 <div class="vault-reveal-text">
 You just cracked the vault before the world even knows it exists.<br><br>
-<em>SIGN LANGUAGE</em> drops <em>July 17, 2026</em> &#8212; and you&#8217;re on the list now. This is the first project created entirely from inside a federal facility. No studio. No engineer. No label. Just bars, a vision, and something to prove.<br><br>
+<em>SIGN LANGUAGE</em> &#8212; debut single. Drops <em>July 17, 2026</em>.<br>
+Written, produced, and engineered by Deonte Edwards.<br><br>
+</div>
+<div class="vault-player">
+<div class="vault-player-label">SNEAK PEEK</div>
+<audio id="vaultAudio" preload="none">
+<source src="assets/sign-language-preview.mp4" type="audio/mp4">
+</audio>
+<div class="vault-player-controls">
+<button class="vault-play-btn" id="vaultPlayBtn" type="button">
+<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><polygon points="6,3 20,12 6,21"/></svg>
+</button>
+<div class="vault-progress-wrap" id="vaultProgressWrap">
+<div class="vault-progress-bar" id="vaultProgressBar"></div>
+</div>
+<div class="vault-time" id="vaultTime">0:00</div>
+</div>
+</div>
+<div class="vault-reveal-text" style="margin-top:16px">
 When this drops, remember: you were here first.<br><br>
 Screenshot this. Share it. Tell them you had access before anyone.<br><br>
 <em style="font-size:16px;letter-spacing:2px">&#8212; TAE</em>
@@ -1033,6 +1064,55 @@ document.querySelectorAll('.tl-gallery').forEach(function(gallery){
       setTimeout(function(){ mainImg.classList.remove('swap-in'); }, 300);
     }, 150);
   });
+});
+})();
+
+
+/* ═══ VAULT AUDIO PLAYER ═══ */
+(function(){
+var audio = document.getElementById('vaultAudio');
+var btn = document.getElementById('vaultPlayBtn');
+var bar = document.getElementById('vaultProgressBar');
+var wrap = document.getElementById('vaultProgressWrap');
+var timeEl = document.getElementById('vaultTime');
+if(!audio || !btn) return;
+
+var playSVG = '<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><polygon points="6,3 20,12 6,21"/></svg>';
+var pauseSVG = '<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>';
+
+btn.addEventListener('click', function(){
+  if(audio.paused){
+    audio.play();
+    btn.innerHTML = pauseSVG;
+    btn.classList.add('playing');
+  } else {
+    audio.pause();
+    btn.innerHTML = playSVG;
+    btn.classList.remove('playing');
+  }
+});
+
+audio.addEventListener('timeupdate', function(){
+  if(audio.duration){
+    bar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    var s = Math.floor(audio.currentTime);
+    timeEl.textContent = Math.floor(s/60) + ':' + ('0' + (s%60)).slice(-2);
+  }
+});
+
+audio.addEventListener('ended', function(){
+  btn.innerHTML = playSVG;
+  btn.classList.remove('playing');
+  bar.style.width = '0%';
+  timeEl.textContent = '0:00';
+});
+
+wrap.addEventListener('click', function(e){
+  if(audio.duration){
+    var rect = wrap.getBoundingClientRect();
+    var pct = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = pct * audio.duration;
+  }
 });
 })();
 </script>
