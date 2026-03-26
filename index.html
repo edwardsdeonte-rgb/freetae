@@ -427,10 +427,15 @@ textarea.letter-input{resize:none;min-height:80px}
 
 #introText{opacity:0}
 .fonts-loaded #introText{opacity:1}
+
+.vault-share-btn{display:block;margin:20px auto 0;padding:12px 32px;border-radius:99px;font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,var(--primary),#ff8a3a);color:#000;box-shadow:0 8px 24px rgba(255,107,0,.25);transition:transform .2s,box-shadow .2s}
+.vault-share-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,0,.35)}
+.vault-share-btn:active{transform:translateY(1px)}
 </style>
 </head>
 <body class="has-intro">
-<div id="intro" role="presentation" aria-hidden="true"><div class="inner"><div id="introWord"><span id="introText">FREETAE</span></div><div id="introTag"></div></div></div>
+<div id="intro" role="presentation" aria-hidden="true"><div class="inner"><div id="introWord"><span id="introText">FREETAE</span></div>
+<div class="vault-proof" id="vaultProof" style="display:none;margin-top:12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:rgba(255,215,0,.4);text-transform:uppercase"></div><div id="introTag"></div></div></div>
 <nav class="nav" aria-label="Main"><a href="#music">Music</a><a href="#story">Story</a><a href="#journey">Journey</a><a href="#connect">Connect</a></nav>
 <a class="sr-only" href="#main">Skip to content</a>
 <main id="main" tabindex="-1">
@@ -562,8 +567,8 @@ Written, produced, and recorded by Deonte Edwards.<br>Mixed by David Yungin Kim.
 <div class="vault-reveal-text" style="margin-top:16px">
 When this drops, remember: you were here first.<br><br>
 Screenshot this. Share it. Tell them you had access before anyone.<br><br>
-<em style="font-size:16px;letter-spacing:2px">&#8212; TAE</em>
-</div>
+<em style="font-size:16px;letter-spacing:2px">&#8212; TAE</em></div>
+<button class="vault-share-btn" id="vaultShare" type="button">Share This</button>
 </div>
 </div>
 </section>
@@ -904,17 +909,7 @@ realInput.disabled=true;if(submitBtn)submitBtn.style.display='none';
 
 
 
-/* ═══ LETTERS TO TAE ═══ */
-(function(){var wall=document.getElementById('lettersWall');var nameI=document.getElementById('letterName');var msgI=document.getElementById('letterMsg');var sendBtn=document.getElementById('letterSend');var toast=document.getElementById('letterToast');if(!wall||!sendBtn)return;
-/* load saved letters */
-try{var saved=JSON.parse(localStorage.getItem('tae_letters')||'[]');saved.forEach(function(l){addCard(l.msg,l.from)})}catch(e){}
-function addCard(msg,from){var d=document.createElement('div');d.className='letter-card';d.innerHTML='<div class="letter-msg">\u201c'+escHtml(msg)+'\u201d</div><div class="letter-from">\u2014 '+(from?escHtml(from):'Anonymous')+'</div>';wall.insertBefore(d,wall.firstChild);d.style.opacity='0';d.style.transform='translateY(8px)';requestAnimationFrame(function(){d.style.transition='opacity .5s,transform .5s';d.style.opacity='1';d.style.transform='none'})}
-function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
-sendBtn.addEventListener('click',function(){var msg=msgI.value.trim();if(!msg){msgI.style.borderColor='rgba(255,68,68,.4)';setTimeout(function(){msgI.style.borderColor=''},1500);return}
-var from=nameI.value.trim()||'Anonymous';addCard(msg,from);
-try{var saved=JSON.parse(localStorage.getItem('tae_letters')||'[]');saved.unshift({msg:msg,from:from});if(saved.length>50)saved=saved.slice(0,50);localStorage.setItem('tae_letters',JSON.stringify(saved))}catch(e){}
-msgI.value='';nameI.value='';if(toast){toast.textContent='Letter sent \u2714';setTimeout(function(){toast.textContent=''},2500)}
-sendBtn.disabled=true;setTimeout(function(){sendBtn.disabled=false},3000)})})();
+
 
 /* ═══ LEDGER ═══ */
 /* ═══ LEDGER ═══ */
@@ -1144,6 +1139,94 @@ document.querySelectorAll('.tl-content').forEach(function(content){
       }
     });
   });
+});
+})();
+
+
+/* ═══ PAGEVIEW TRACKING ═══ */
+(function(){
+fetch('https://api.freetae.com/api/pageview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname})}).catch(function(){});
+})();
+
+
+/* ═══ SOCIAL PROOF ═══ */
+(function(){
+fetch('https://api.freetae.com/api/social-proof').then(function(r){return r.json()}).then(function(d){
+  var el=document.getElementById('vaultProof');
+  if(el&&d.vault_unlocks>0){
+    el.textContent=d.vault_unlocks+' '+(d.vault_unlocks===1?'person has':'people have')+' unlocked the vault';
+    el.style.display='block';
+  }
+}).catch(function(){});
+})();
+
+
+/* ═══ VAULT SHARE ═══ */
+(function(){
+var shareBtn=document.getElementById('vaultShare');
+if(!shareBtn)return;
+shareBtn.addEventListener('click',function(){
+  var text='I just unlocked the vault on freetae.com 🔓🔥 SIGN LANGUAGE dropping July 17, 2026';
+  var url='https://freetae.com';
+  if(navigator.share){
+    navigator.share({title:'FREETAE - Vault Unlocked',text:text,url:url}).catch(function(){});
+  }else{
+    navigator.clipboard.writeText(text+' '+url).then(function(){
+      shareBtn.textContent='Link Copied ✓';
+      setTimeout(function(){shareBtn.textContent='Share This'},2000);
+    }).catch(function(){
+      window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text+' '+url),'_blank');
+    });
+  }
+});
+})();
+
+
+/* ═══ LETTERS TO TAE (server-side) ═══ */
+(function(){
+var wall=document.getElementById('lettersWall');
+var nameI=document.getElementById('letterName');
+var msgI=document.getElementById('letterMsg');
+var sendBtn=document.getElementById('letterSend');
+var toast=document.getElementById('letterToast');
+if(!wall||!sendBtn)return;
+
+function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function addCard(msg,from){
+  var d=document.createElement('div');d.className='letter-card';
+  d.innerHTML='<div class="letter-msg">\u201c'+escHtml(msg)+'\u201d</div><div class="letter-from">\u2014 '+(from?escHtml(from):'Anonymous')+'</div>';
+  wall.insertBefore(d,wall.firstChild);
+  d.style.opacity='0';d.style.transform='translateY(8px)';
+  requestAnimationFrame(function(){d.style.transition='opacity .5s,transform .5s';d.style.opacity='1';d.style.transform='none'});
+}
+
+// Load approved letters from API
+fetch('https://api.freetae.com/api/letters').then(function(r){return r.json()}).then(function(letters){
+  letters.forEach(function(l){addCard(l.message,l.name)});
+}).catch(function(){
+  // Fallback: load from localStorage
+  try{var saved=JSON.parse(localStorage.getItem('tae_letters')||'[]');saved.forEach(function(l){addCard(l.msg,l.from)})}catch(e){}
+});
+
+sendBtn.addEventListener('click',function(){
+  var msg=msgI.value.trim();
+  if(!msg){msgI.style.borderColor='rgba(255,68,68,.4)';setTimeout(function(){msgI.style.borderColor=''},1500);return}
+  var from=nameI.value.trim()||'Anonymous';
+  
+  // Submit to API
+  fetch('https://api.freetae.com/api/letters',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name:from,message:msg})
+  }).catch(function(){});
+  
+  // Also save locally
+  try{var saved=JSON.parse(localStorage.getItem('tae_letters')||'[]');saved.unshift({msg:msg,from:from});if(saved.length>50)saved=saved.slice(0,50);localStorage.setItem('tae_letters',JSON.stringify(saved))}catch(e){}
+  
+  addCard(msg,from);
+  msgI.value='';nameI.value='';
+  if(toast){toast.textContent='Letter sent \u2714';setTimeout(function(){toast.textContent=''},2500)}
+  sendBtn.disabled=true;setTimeout(function(){sendBtn.disabled=false},3000);
 });
 })();
 </script>
