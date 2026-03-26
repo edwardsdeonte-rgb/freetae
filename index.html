@@ -1175,7 +1175,7 @@ function generateShareImage(){
     var ctx=c.getContext('2d');
     
     // Background — dark gradient matching site
-    var bg=ctx.createRadialGradient(540,700,0,540,700,900);
+    var bg=ctx.createRadialGradient(540,960,0,540,960,960);
     bg.addColorStop(0,'#1a0800');
     bg.addColorStop(0.5,'#0a0400');
     bg.addColorStop(1,'#000000');
@@ -1183,7 +1183,7 @@ function generateShareImage(){
     ctx.fillRect(0,0,1080,1920);
     
     // Subtle orange glow
-    var glow=ctx.createRadialGradient(540,750,0,540,750,500);
+    var glow=ctx.createRadialGradient(540,960,0,540,960,600);
     glow.addColorStop(0,'rgba(255,107,0,0.12)');
     glow.addColorStop(1,'rgba(255,107,0,0)');
     ctx.fillStyle=glow;
@@ -1191,7 +1191,7 @@ function generateShareImage(){
     
     // Vault lock icon
     ctx.save();
-    ctx.translate(540,640);
+    ctx.translate(540,760);
     ctx.strokeStyle='rgba(255,215,0,0.6)';
     ctx.lineWidth=6;
     ctx.beginPath();
@@ -1214,7 +1214,7 @@ function generateShareImage(){
     ctx.fillStyle='rgba(255,255,255,0.35)';
     ctx.font='600 22px Oswald, sans-serif';
     ctx.letterSpacing='6px';
-    ctx.fillText('I UNLOCKED THE VAULT',540,790);
+    ctx.fillText('I UNLOCKED THE VAULT',540,920);
     
     // "FREETAE" — big logo
     ctx.fillStyle='#FF6B00';
@@ -1222,34 +1222,34 @@ function generateShareImage(){
     ctx.letterSpacing='12px';
     ctx.shadowColor='rgba(255,107,0,0.5)';
     ctx.shadowBlur=40;
-    ctx.fillText('FREETAE',540,940);
+    ctx.fillText('FREETAE',540,1080);
     ctx.shadowBlur=0;
     
     // "SIGN LANGUAGE"
     ctx.fillStyle='#FFD700';
     ctx.font='700 42px Oswald, sans-serif';
     ctx.letterSpacing='8px';
-    ctx.fillText('SIGN LANGUAGE',540,1020);
+    ctx.fillText('SIGN LANGUAGE',540,1160);
     
     // Divider line
     ctx.strokeStyle='rgba(255,107,0,0.4)';
     ctx.lineWidth=2;
     ctx.beginPath();
-    ctx.moveTo(400,1070);
-    ctx.lineTo(680,1070);
+    ctx.moveTo(400,1210);
+    ctx.lineTo(680,1210);
     ctx.stroke();
     
     // "DROPPING JULY 17, 2026"
     ctx.fillStyle='rgba(255,255,255,0.6)';
     ctx.font='600 24px Oswald, sans-serif';
     ctx.letterSpacing='4px';
-    ctx.fillText('DROPPING JULY 17, 2026',540,1120);
+    ctx.fillText('DROPPING JULY 17, 2026',540,1260);
     
     // "freetae.com" at bottom
     ctx.fillStyle='rgba(255,255,255,0.3)';
     ctx.font='400 20px Rajdhani, sans-serif';
     ctx.letterSpacing='3px';
-    ctx.fillText('FREETAE.COM',540,1220);
+    ctx.fillText('FREETAE.COM',540,1360);
     
     // "SWIPE UP" arrow hint at very bottom
     ctx.fillStyle='rgba(255,215,0,0.4)';
