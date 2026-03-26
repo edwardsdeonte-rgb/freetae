@@ -917,7 +917,7 @@ var fillEl=document.getElementById('ledgerFill');
 var recentEl=document.getElementById('ledgerRecent');
 if(!totalEl||!fillEl) return;
 
-fetch('https://api.freetae.com/api/ledger?key=ftapi-acd5352d7fbe03b084523b3b81da649f9c893e76')
+fetch('https://api.freetae.com/api/ledger')
 .then(function(r){return r.json()})
 .then(function(data){
   var amount=data.total||0;
