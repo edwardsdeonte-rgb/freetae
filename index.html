@@ -436,6 +436,8 @@ textarea.letter-input{resize:none;min-height:80px}
 .vault-share-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,0,.35)}
 .vault-share-btn:active{transform:translateY(1px)}
 
+
+.hero-title{cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
 </style>
 </head>
 <body class="has-intro">
@@ -1379,7 +1381,7 @@ sendBtn.addEventListener('click',function(){
 
 /* ═══ EASTER EGG: SECRET SNIPPET ═══ */
 (function(){
-var logo=document.querySelector('.logo');
+var logo=document.querySelector('.hero-title');
 if(!logo)return;
 var taps=0;
 var tapTimer=null;
