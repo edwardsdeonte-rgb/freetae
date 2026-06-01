@@ -246,52 +246,6 @@ section{content-visibility:auto;contain-intrinsic-size:auto 800px}
 .hero{content-visibility:visible}
 body.has-intro #site{opacity:0;visibility:hidden}
 body.intro-done #site{opacity:1;visibility:visible;transition:opacity 1s cubic-bezier(.22,1,.36,1)}
-#vault{background:linear-gradient(180deg,var(--bg),#050505);text-align:center;position:relative;overflow:hidden}
-#vault::before{content:'';position:absolute;top:50%;left:50%;width:600px;height:600px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,107,0,.05),transparent 70%);filter:blur(60px);pointer-events:none}
-.vault-container{max-width:480px;margin:44px auto 0;position:relative}
-.vault-container.reveal{animation:vaultFallback 1s ease 2s forwards}
-@keyframes vaultFallback{to{opacity:1;transform:none}}
-.vault-door{position:relative;width:200px;height:200px;margin:0 auto 32px;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(40,40,42,1),rgba(18,18,20,1));border:3px solid rgba(255,255,255,0.14);box-shadow:0 0 60px rgba(0,0,0,.6),inset 0 2px 0 rgba(255,255,255,.06),inset 0 -4px 12px rgba(0,0,0,.5);transition:all .8s cubic-bezier(.16,1,.3,1)}
-.vault-door::before{content:'';position:absolute;inset:12px;border-radius:50%;border:2px solid rgba(255,255,255,0.14);background:radial-gradient(circle at 45% 40%,rgba(50,50,52,.6),rgba(10,10,12,.8));box-shadow:inset 0 4px 20px rgba(0,0,0,.6)}
-.vault-door::after{content:'';position:absolute;inset:24px;border-radius:50%;border:1px solid rgba(255,107,0,0.1);box-shadow:0 0 20px rgba(255,107,0,.05)}
-.vault-lock{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;color:rgba(255,215,0,0.65);transition:all .6s cubic-bezier(.16,1,.3,1)}
-.vault-lock svg{width:44px;height:44px;filter:drop-shadow(0 0 12px rgba(255,215,0,.15))}
-.vault-dial{position:absolute;inset:8px;border-radius:50%;z-index:1;pointer-events:none}
-.vault-dial::before{content:'';position:absolute;inset:0;border-radius:50%;border:1px dashed rgba(255,255,255,.06);animation:vaultSpin 20s linear infinite}
-@keyframes vaultSpin{to{transform:rotate(360deg)}}
-.vault-notch{position:absolute;width:2px;height:8px;background:rgba(255,255,255,.1);top:4px;left:50%;transform:translateX(-50%);border-radius:2px}
-.vault-notch:nth-child(2){transform:translateX(-50%) rotate(90deg);top:50%;left:4px}
-.vault-notch:nth-child(3){transform:translateX(-50%) rotate(180deg);top:auto;bottom:4px}
-.vault-notch:nth-child(4){transform:translateX(-50%) rotate(270deg);top:50%;left:auto;right:4px}
-.vault-prompt{font-family:var(--mono);font-size:11px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:20px}
-.vault-input-wrap{display:flex;justify-content:center;gap:8px;margin-bottom:16px;direction:ltr}
-.vault-char{width:44px;height:56px;border-radius:10px;background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:22px;font-weight:600;color:var(--gold);letter-spacing:2px;text-transform:uppercase;transition:border-color .3s,background .3s,transform .2s}
-.vault-char.active{border-color:rgba(255,107,0,0.65);background:rgba(255,107,0,.05)}
-.vault-char.filled{border-color:rgba(255,215,0,0.65);text-shadow:0 0 8px rgba(255,215,0,.2)}
-.vault-hidden-input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none;direction:ltr;text-align:left;unicode-bidi:plaintext}
-.vault-submit{padding:12px 32px;border-radius:99px;font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.7);transition:all .3s cubic-bezier(.16,1,.3,1);margin-bottom:16px}
-.vault-submit:hover{background:rgba(255,107,0,.08);border-color:rgba(255,107,0,0.65);color:var(--primary)}
-.vault-msg{font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;min-height:20px;transition:all .3s}
-.vault-msg.denied{color:#ff4444;animation:vaultShake .5s ease}
-.vault-msg.granted{color:#2ecc71}
-@keyframes vaultShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
-.vault-hint{margin-top:20px;font-size:12px;color:rgba(255,255,255,0.7);line-height:1.6}
-.vault-hint a{color:rgba(255,107,0,0.65);transition:color .2s}
-.vault-hint a:hover{color:var(--primary)}
-.vault-unlocked .vault-door{border-color:rgba(46,204,113,0.3);box-shadow:0 0 80px rgba(46,204,113,.15),inset 0 2px 0 rgba(255,255,255,.06)}
-.vault-unlocked .vault-door::after{border-color:rgba(46,204,113,0.2);box-shadow:0 0 30px rgba(46,204,113,.1)}
-.vault-unlocked .vault-lock{color:rgba(46,204,113,0.7)}
-.vault-unlocked .vault-lock svg{filter:drop-shadow(0 0 16px rgba(46,204,113,.3))}
-.vault-reveal{display:none;margin-top:24px;padding:24px;border-radius:16px;background:rgba(255,255,255,.09);border:1px solid rgba(46,204,113,0.15);text-align:center}
-.vault-unlocked .vault-reveal{display:block;animation:vaultReveal .8s cubic-bezier(.16,1,.3,1)}
-@keyframes vaultReveal{from{opacity:0;transform:translateY(16px) scale(.95)}to{opacity:1;transform:none}}
-.vault-reveal-title{font-family:var(--heading);font-size:clamp(22px,4vw,30px);letter-spacing:3px;color:var(--gold);margin-bottom:8px}
-.vault-reveal-text{font-size:14px;color:rgba(255,255,255,0.7);line-height:1.7}
-.vault-reveal-text em{color:var(--primary);font-style:normal;font-weight:600}
-.tl-year{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--primary);letter-spacing:2px;margin-bottom:8px;text-shadow:0 0 20px rgba(255,107,0,.2)}
-.tl-dot{position:absolute;top:-22px;left:50%;width:10px;height:10px;border-radius:50%;background:var(--primary);transform:translateX(-50%);box-shadow:0 0 12px rgba(255,107,0,.3)}
-.tl-title{font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-warm);margin-bottom:8px}
-.tl-desc{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6}
 
 #letters{background:linear-gradient(180deg,var(--bg),#050505);position:relative}
 .letters-sub{text-align:center;color:rgba(255,255,255,0.7);font-size:14px;margin-top:12px;max-width:500px;margin-left:auto;margin-right:auto}
@@ -311,53 +265,7 @@ textarea.letter-input{resize:none;min-height:80px}
 .letter-send:hover{background:rgba(255,107,0,.18);border-color:rgba(255,107,0,0.65);transform:translateY(-1px)}
 .letter-send:disabled{opacity:.4;cursor:default;transform:none}
 .letter-toast{text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:2px;color:rgba(46,204,113,0.7);min-height:18px;margin-top:8px}
-#ledger{background:linear-gradient(180deg,var(--bg),#050505);text-align:center;position:relative}
-.ledger-container{max-width:520px;margin:32px auto 0}
-.ledger-total{font-family:var(--heading);font-size:clamp(48px,10vw,72px);color:var(--gold);letter-spacing:4px;text-shadow:0 0 30px rgba(255,215,0,.15);line-height:1}
-.ledger-total-label{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-top:8px}
-.ledger-bar{margin:24px 0;height:6px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;position:relative}
-.ledger-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--primary),var(--gold));transition:width 1.5s cubic-bezier(.16,1,.3,1);box-shadow:0 0 12px rgba(255,107,0,.3)}
-.ledger-goal{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:20px}
-.ledger-recent{display:flex;flex-direction:column;gap:8px;margin-top:20px}
-.ledger-entry{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,0.14)}
-.ledger-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,rgba(255,107,0,.2),rgba(255,215,0,.15));display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--gold);flex-shrink:0}
-.ledger-name{font-size:13px;color:rgba(255,255,255,0.7);flex:1;text-align:left}
-.ledger-amt{font-family:var(--mono);font-size:13px;color:var(--gold-warm);letter-spacing:1px}
-.ledger-cta{margin-top:24px}
-.ledger-note{margin-top:16px;font-size:11px;color:rgba(255,255,255,0.7);line-height:1.6}
-.tl-year{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--primary);letter-spacing:2px;margin-bottom:8px;text-shadow:0 0 20px rgba(255,107,0,.2)}
-.tl-dot{position:absolute;top:-22px;left:50%;width:10px;height:10px;border-radius:50%;background:var(--primary);transform:translateX(-50%);box-shadow:0 0 12px rgba(255,107,0,.3)}
-.tl-title{font-family:var(--label);font-size:14px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-warm);margin-bottom:8px}
-.tl-desc{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6}
 
-#journey{background:linear-gradient(180deg,#000 0%,#0a0500 50%,#000 100%)}
-.tl-wrap{max-width:900px;margin:0 auto;position:relative;padding:20px 0}
-.tl-wrap::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,var(--primary),var(--gold),var(--primary),transparent);transform:translateX(-50%)}
-.tl-item{display:flex;align-items:flex-start;margin-bottom:64px;position:relative;opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
-.tl-item.tl-in{opacity:1;transform:translateY(0)}
-.tl-item:nth-child(odd){flex-direction:row-reverse}
-.tl-item:nth-child(odd) .tl-content{text-align:right;padding-right:48px;padding-left:0}
-.tl-item:nth-child(even) .tl-content{padding-left:48px}
-.tl-dot{position:absolute;left:50%;top:24px;width:16px;height:16px;border-radius:50%;background:var(--primary);border:3px solid #000;transform:translateX(-50%);z-index:2;box-shadow:0 0 20px rgba(255,107,0,.5)}
-.tl-content{width:50%;padding:0}
-.tl-year{font-family:Oswald,sans-serif;font-size:14px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
-.tl-title{font-family:Oswald,sans-serif;font-size:22px;letter-spacing:1px;color:#fff;margin-bottom:8px;line-height:1.3}
-.tl-desc{color:var(--muted);font-size:14px;line-height:1.6}
-.tl-img{width:100%;max-width:320px;border-radius:16px;margin-top:12px;border:1px solid var(--border);box-shadow:0 12px 40px rgba(0,0,0,.5);aspect-ratio:1/1;object-fit:cover}
-.tl-item:nth-child(odd) .tl-img{margin-left:auto}
-.tl-gallery{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.tl-gallery .tl-thumb{width:72px;height:72px;border-radius:10px;object-fit:cover;border:1px solid var(--border);opacity:.7;transition:opacity .25s,transform .25s;cursor:pointer}
-.tl-gallery .tl-thumb:hover{opacity:1;transform:scale(1.05)}
-.tl-item:nth-child(odd) .tl-gallery{justify-content:flex-end}
-@media(max-width:680px){
-.tl-wrap::before{left:24px}
-.tl-dot{left:24px}
-.tl-item,.tl-item:nth-child(odd){flex-direction:column}
-.tl-content,.tl-item:nth-child(odd) .tl-content{width:100%;text-align:left;padding-left:52px;padding-right:0}
-.tl-item:nth-child(odd) .tl-img{margin-left:0}
-.tl-item:nth-child(odd) .tl-gallery{justify-content:flex-start}
-.tl-img{max-width:100%}
-}
 #letters{background:linear-gradient(180deg,var(--bg),#050505);position:relative}
 .letters-sub{text-align:center;color:rgba(255,255,255,0.7);font-size:14px;margin-top:12px;max-width:500px;margin-left:auto;margin-right:auto}
 .letters-wall{max-width:800px;margin:32px auto 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;max-height:420px;overflow-y:auto;padding:4px;scrollbar-width:thin;scrollbar-color:rgba(255,107,0,0.65) transparent}
@@ -376,64 +284,12 @@ textarea.letter-input{resize:none;min-height:80px}
 .letter-send:hover{background:rgba(255,107,0,.18);border-color:rgba(255,107,0,0.65);transform:translateY(-1px)}
 .letter-send:disabled{opacity:.4;cursor:default;transform:none}
 .letter-toast{text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:2px;color:rgba(46,204,113,0.7);min-height:18px;margin-top:8px}
-#ledger{background:linear-gradient(180deg,var(--bg),#050505);text-align:center;position:relative}
-.ledger-container{max-width:520px;margin:32px auto 0}
-.ledger-total{font-family:var(--heading);font-size:clamp(48px,10vw,72px);color:var(--gold);letter-spacing:4px;text-shadow:0 0 30px rgba(255,215,0,.15);line-height:1}
-.ledger-total-label{font-family:var(--mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-top:8px}
-.ledger-bar{margin:24px 0;height:6px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;position:relative}
-.ledger-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--primary),var(--gold));transition:width 1.5s cubic-bezier(.16,1,.3,1);box-shadow:0 0 12px rgba(255,107,0,.3)}
-.ledger-goal{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:20px}
-.ledger-recent{display:flex;flex-direction:column;gap:8px;margin-top:20px}
-.ledger-entry{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,0.14)}
-.ledger-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,rgba(255,107,0,.2),rgba(255,215,0,.15));display:grid;place-items:center;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--gold);flex-shrink:0}
-.ledger-name{font-size:13px;color:rgba(255,255,255,0.7);flex:1;text-align:left}
-.ledger-amt{font-family:var(--mono);font-size:13px;color:var(--gold-warm);letter-spacing:1px}
-.ledger-cta{margin-top:24px}
-.ledger-note{margin-top:16px;font-size:11px;color:rgba(255,255,255,0.7);line-height:1.6}
-.tl-blurred{filter:blur(18px) brightness(.7);transition:filter .5s}
-.tl-blurred:hover{filter:blur(12px) brightness(.8)}
-.tl-wrap{max-width:640px}
-.tl-wrap::before{left:24px}
-.tl-dot{left:24px}
-.tl-item,.tl-item:nth-child(odd){flex-direction:column}
-.tl-content,.tl-item:nth-child(odd) .tl-content{width:100%;text-align:left;padding-left:52px;padding-right:0}
-.tl-item:nth-child(odd) .tl-img{margin-left:0}
-.tl-item:nth-child(odd) .tl-gallery{justify-content:flex-start}
-.tl-img{max-width:100%;cursor:pointer}
-.tl-thumb{cursor:pointer;transition:transform .2s,border-color .2s;border:2px solid transparent;border-radius:8px}
-.tl-thumb:hover{transform:scale(1.08);border-color:rgba(255,107,0,0.65)}
-.tl-thumb:active{transform:scale(.95)}
-.tl-img.swap-out{opacity:0;transition:opacity .15s}
-.tl-img.swap-in{transition:opacity .25s}
-.tl-lightbox{position:fixed;inset:0;z-index:30000;background:rgba(0,0,0,.95);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.tl-lightbox.active{opacity:1;pointer-events:auto}
-.tl-lightbox img{max-width:92vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 20px 80px rgba(0,0,0,.6)}
-.tl-lightbox-close{position:absolute;top:16px;right:20px;font-size:32px;color:rgba(255,255,255,0.7);cursor:pointer;z-index:2;font-family:system-ui;padding:8px;transition:color .2s}
-.tl-lightbox-close:hover{color:#fff}
-.tl-video{width:100%;border-radius:var(--radius,16px);aspect-ratio:16/9;object-fit:cover;cursor:default}
-.tl-blurred{filter:blur(18px) brightness(.7);transition:filter .5s;cursor:default}
-.vault-player{margin:20px auto;max-width:360px;padding:16px 20px;background:rgba(255,255,255,.09);border:1px solid rgba(255,107,0,0.15);border-radius:14px}
-.vault-player-label{font-family:var(--mono);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--primary);margin-bottom:12px;text-align:center}
-.vault-player-controls{display:flex;align-items:center;gap:12px}
-.vault-play-btn{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#ff8a3a);color:#000;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 16px rgba(255,107,0,.3)}
-.vault-play-btn:hover{transform:scale(1.08)}
-.vault-play-btn:active{transform:scale(.95)}
-.vault-play-btn svg{width:18px;height:18px;margin-left:2px}
-.vault-play-btn.playing svg{margin-left:0}
-.vault-progress-wrap{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;cursor:pointer;position:relative;overflow:hidden}
-.vault-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--gold));border-radius:3px;transition:width .1s linear}
-.vault-time{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,0.7);min-width:36px;text-align:right}
 
-.tl-gallery .tl-thumb{object-position:top}
 
-.tl-img{aspect-ratio:auto!important;object-fit:contain!important;max-height:500px;width:100%;background:rgba(0,0,0,.3);border-radius:16px}
 
 #introText{opacity:0}
 .fonts-loaded #introText{opacity:1}
 
-.vault-share-btn{display:block;margin:20px auto 0;padding:12px 32px;border-radius:99px;font-family:var(--label);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,var(--primary),#ff8a3a);color:#000;box-shadow:0 8px 24px rgba(255,107,0,.25);transition:transform .2s,box-shadow .2s}
-.vault-share-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,107,0,.35)}
-.vault-share-btn:active{transform:translateY(1px)}
 
 
 .hero-title{cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
@@ -441,8 +297,8 @@ textarea.letter-input{resize:none;min-height:80px}
 </head>
 <body class="has-intro">
 <div id="intro" role="presentation" aria-hidden="true"><div class="inner"><div id="introWord"><span id="introText">FREETAE</span></div>
-<div class="vault-proof" id="vaultProof" style="display:none;margin-top:12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:rgba(255,215,0,.4);text-transform:uppercase"></div><div id="introTag"></div></div></div>
-<nav class="nav" aria-label="Main"><a href="#music">Music</a><a href="#story">Story</a><a href="#journey">Journey</a><a href="#connect">Connect</a></nav>
+<div id="introTag"></div></div></div>
+<nav class="nav" aria-label="Main"><a href="#music">Music</a><a href="#story">Story</a><a href="#connect">Connect</a></nav>
 <a class="sr-only" href="#main">Skip to content</a>
 <main id="main" tabindex="-1">
 <p class="sr-only">Deonte Edwards (FREETAE) is a music producer and artist. Producer credit: "LIL ROMEO" by Lil Wayne.</p>
@@ -538,147 +394,6 @@ textarea.letter-input{resize:none;min-height:80px}
 </div></section>
 
 <div class="divider"></div>
-<div class="divider"></div>
-<section id="vault">
-<h2 class="section-title">THE VAULT</h2>
-<div class="vault-container reveal">
-<div class="vault-door">
-<div class="vault-dial"><span class="vault-notch"></span><span class="vault-notch"></span><span class="vault-notch"></span><span class="vault-notch"></span></div>
-<div class="vault-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-</div>
-<div class="vault-prompt">Enter access code</div>
-<div class="vault-input-wrap" id="vaultInputWrap"></div>
-<input class="vault-hidden-input" id="vaultInput" type="text" maxlength="7" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" dir="ltr" inputmode="text">
-<button class="vault-submit" id="vaultSubmit" type="button">Unlock</button>
-<div class="vault-msg" id="vaultMsg"></div>
-<div class="vault-hint">Clues drop on <a href="https://instagram.com/deonteedwards" target="_blank" rel="noopener noreferrer">Instagram</a> &#8212; follow for the code.</div>
-<div class="vault-reveal" id="vaultReveal">
-<div class="vault-reveal-title">YOU&#8217;RE EARLY</div>
-<div class="vault-reveal-text">
-You just cracked the vault before the world even knows it exists.<br><br>
-<em>SIGN LANGUAGE</em> &#8212; debut single. Drops <em>July 17, 2026</em>.<br>
-Written, produced, and recorded by Deonte Edwards.<br>Mixed by David Yungin Kim. Mastered by Million Dollar Snare.<br><br>
-</div>
-<div class="vault-player">
-<div class="vault-player-label">SNEAK PEEK</div>
-<audio id="vaultAudio" preload="none">
-<source src="assets/sign-language-preview.mp4" type="audio/mp4">
-</audio>
-<div class="vault-player-controls">
-<button class="vault-play-btn" id="vaultPlayBtn" type="button">
-<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><polygon points="6,3 20,12 6,21"/></svg>
-</button>
-<div class="vault-progress-wrap" id="vaultProgressWrap">
-<div class="vault-progress-bar" id="vaultProgressBar"></div>
-</div>
-<div class="vault-time" id="vaultTime">0:00</div>
-</div>
-</div>
-<div class="vault-reveal-text" style="margin-top:16px">
-When this drops, remember: you were here first.<br><br>
-Screenshot this. Share it. Tell them you had access before anyone.<br><br>
-<em style="font-size:16px;letter-spacing:2px">&#8212; TAE</em></div>
-<button class="vault-share-btn" id="vaultShare" type="button">Share This</button>
-</div>
-</div>
-</section>
-<div class="divider"></div>
-<section id="journey" class="fade-on-scroll">
-<h2 class="section-title">THE JOURNEY</h2>
-<div class="tl-wrap">
-
-<div class="tl-item">
-<div class="tl-dot"></div>
-<div class="tl-content">
-<div class="tl-year">Long Beach, CA</div>
-<div class="tl-title">Where It Started</div>
-<div class="tl-desc">Born and raised in Long Beach.</div>
-<img alt="Young Deonte Edwards" class="tl-img" loading="lazy" src="assets/timeline/tl-baby-deonte.webp?v=1774502055"/>
-</div>
-</div>
-
-<div class="tl-item">
-<div class="tl-dot"></div>
-<div class="tl-content">
-<div class="tl-year">2009 — 2013</div>
-<div class="tl-title">First Beats. First Bars.</div>
-<div class="tl-desc">Lunch ciphers at Poly High. Making beats after school. Studio by 2013.</div>
-</div>
-</div>
-
-<div class="tl-item">
-<div class="tl-dot"></div>
-<div class="tl-content">
-<div class="tl-year">2014 — 2017</div>
-<div class="tl-title">Industry Connections</div>
-<div class="tl-desc"></div>
-<img alt="Deonte Edwards 2016" class="tl-img" loading="lazy" src="assets/timeline/tl-main-photo-2016.webp?v=1774502055"/>
-<div class="tl-gallery">
-<img alt="At Revolt Studios" class="tl-thumb" loading="lazy" src="assets/timeline/tl-revolt-2013.webp?v=1774502055"/>
-<img alt="2015" class="tl-thumb" loading="lazy" src="assets/timeline/tl-2015.webp?v=1774502055"/>
-<img alt="With Iggy Azalea" class="tl-thumb" loading="lazy" src="assets/timeline/tl-iggy-azalea.webp?v=1774502055"/>
-<img alt="With Nipsey Hussle" class="tl-thumb" loading="lazy" src="assets/timeline/tl-nipsey-hussle.webp?v=1774502055"/>
-<img alt="2017" class="tl-thumb" loading="lazy" src="assets/timeline/tl-2017.webp?v=1774502055"/>
-<img alt="2017" class="tl-thumb" loading="lazy" src="assets/timeline/tl-2017-secondary.webp?v=1774502055"/>
-</div>
-</div>
-</div>
-
-<div class="tl-item">
-<div class="tl-dot"></div>
-<div class="tl-content">
-<div class="tl-year">August 2018</div>
-<div class="tl-title">TierOneRecords Founded</div>
-<div class="tl-desc">Built the label from nothing. No middlemen. Full creative and business control. Self-funded, self-owned.</div>
-<img alt="TierOneRecords founded August 2018" class="tl-img" loading="lazy" src="assets/timeline/tl-red-logo.webp?v=1774502055"/>
-<div class="tl-gallery">
-<img alt="TierOneRecords founded 2018" class="tl-thumb" loading="lazy" src="assets/timeline/tl-aug-2018-tierone-founded.webp?v=1774502055"/>
-<img alt="Deonte with Famous Far and Keilo" class="tl-thumb" loading="lazy" src="assets/timeline/tl-famous-far-keilo.webp?v=1774502055"/>
-</div>
-</div>
-</div>
-
-
-
-<div class="tl-item">
-<div class="tl-dot"></div>
-<div class="tl-content">
-<div class="tl-year">2020 — 2022</div>
-<div class="tl-title">The Grind</div>
-<div class="tl-desc"></div>
-<video class="tl-img tl-video" muted loop playsinline preload="none" poster="assets/timeline/tl-grind-poster.webp?v=1774502055"><source data-src="assets/timeline/tl-grind-studio.mp4?v=1774502055" type="video/mp4"></video>
-<div class="tl-gallery">
-<img alt="At Roc Nation 2022" class="tl-thumb" loading="lazy" src="assets/timeline/tl-rocnation-2022.webp?v=1774502055"/>
-<img alt="The Grind" class="tl-thumb" loading="lazy" src="assets/timeline/tl-grind-photo1.webp?v=1774502055"/>
-<img alt="The Grind" class="tl-thumb" loading="lazy" src="assets/timeline/tl-grind-photo2.webp?v=1774502055"/>
-</div>
-
-</div>
-</div>
-
-<div class="tl-item">
-<div class="tl-dot"></div>
-<div class="tl-content">
-<div class="tl-year">2025</div>
-<div class="tl-title">Locked In</div>
-<div class="tl-desc">Serving a federal sentence. The vision never stopped. TierOneRecords blueprint expanding from confinement. Circumstances don’t dictate direction.</div>
-<img alt="Deonte Edwards 2025" class="tl-img" loading="lazy" src="assets/timeline/tl-current-2025.webp?v=1774502055"/>
-</div>
-</div>
-
-<div class="tl-item">
-<div class="tl-dot"></div>
-<div class="tl-content">
-<div class="tl-year">2026</div>
-<div class="tl-title">SIGN LANGUAGE</div>
-<div class="tl-desc">Debut single. Written, produced, and recorded by Deonte Edwards.<br>Mixed by David Yungin Kim. Mastered by Million Dollar Snare. July 17, 2026.</div>
-<img alt="Sign Language cover art" class="tl-img tl-blurred" loading="lazy" src="assets/timeline/tl-sign-language.webp?v=1774502055"/>
-</div>
-</div>
-
-</div>
-</section>
-<div class="divider"></div>
 <section id="letters">
 <h2 class="section-title">LETTERS TO TAE</h2>
 <p class="letters-sub">Drop a message. Words reach further than you think.</p>
@@ -686,7 +401,6 @@ Screenshot this. Share it. Tell them you had access before anyone.<br><br>
 <div class="letter-card"><div class="letter-msg">&#8220;Your story is proof that fire can&#8217;t be contained. Keep going.&#8221;</div><div class="letter-from">&#8212; A.R., Houston</div></div>
 <div class="letter-card"><div class="letter-msg">&#8220;Lil Romeo on repeat. The production is insane.&#8221;</div><div class="letter-from">&#8212; Marcus, ATL</div></div>
 <div class="letter-card"><div class="letter-msg">&#8220;Trial and error is my motto now. Respect.&#8221;</div><div class="letter-from">&#8212; Kenji, LA</div></div>
-<div class="letter-card"><div class="letter-msg">&#8220;Can&#8217;t wait for Sign Language. The vault got me hyped.&#8221;</div><div class="letter-from">&#8212; Destiny, NYC</div></div>
 <div class="letter-card"><div class="letter-msg">&#8220;Independent and still making waves. That&#8217;s the blueprint.&#8221;</div><div class="letter-from">&#8212; Jay, Chicago</div></div>
 <div class="letter-card"><div class="letter-msg">&#8220;Quarter Mill is underrated. The whole In Due Time project hits different.&#8221;</div><div class="letter-from">&#8212; Trey, LBC</div></div>
 </div>
@@ -695,19 +409,6 @@ Screenshot this. Share it. Tell them you had access before anyone.<br><br>
 <textarea class="letter-input" id="letterMsg" placeholder="Write your message..." maxlength="200"></textarea>
 <button class="letter-send" id="letterSend" type="button">Send Letter</button>
 <div class="letter-toast" id="letterToast"></div>
-</div>
-</section>
-<div class="divider"></div>
-<section id="ledger">
-<h2 class="section-title">THE LEDGER</h2>
-<div class="ledger-container reveal">
-<div class="ledger-total" id="ledgerTotal">$0</div>
-<div class="ledger-total-label">Raised by listeners</div>
-<div class="ledger-bar"><div class="ledger-fill" id="ledgerFill" style="width:0%"></div></div>
-<div class="ledger-goal"><span>$0</span><span>Goal: $10,000</span></div>
-<div class="ledger-recent" id="ledgerRecent"><div class="ledger-loading" style="text-align:center;color:rgba(255,255,255,0.5);font-size:12px;padding:12px">Loading supporters...</div></div>
-<div class="ledger-cta"><button class="btn btn-gold js-support">Support The Music</button></div>
-<div class="ledger-note">100% funds go directly to music production, distribution, and TierOneRecords operations. Every dollar is accounted for.</div>
 </div>
 </section>
 <div class="divider"></div>
@@ -770,7 +471,7 @@ io.unobserve(e.target)}})},{rootMargin:'0px 0px -6% 0px',threshold:.08});els.for
 (function(){var PLAY='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',PAUSE='<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';var cur=null,curP=null;function fmt(s){return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0')}document.querySelectorAll('.audio-prev').forEach(function(p){var btn=p.querySelector('.ap-btn'),bar=p.querySelector('.ap-bar'),time=p.querySelector('.ap-time'),wrap=p.querySelector('.ap-bar-wrap'),src=p.dataset.audio;if(!btn||!src)return;var a=null;function stop(){if(!a)return;a.pause();a.currentTime=0;btn.innerHTML=PLAY;btn.classList.remove('playing');bar.style.width='0%';time.textContent='0:30';if(curP===p){cur=null;curP=null}}function play(){if(cur&&curP!==p){var ob=curP.querySelector('.ap-btn');cur.pause();cur.currentTime=0;if(ob){ob.innerHTML=PLAY;ob.classList.remove('playing')}var obar=curP.querySelector('.ap-bar');if(obar)obar.style.width='0%';var ot=curP.querySelector('.ap-time');if(ot)ot.textContent='0:30';cur=null;curP=null}if(!a){a=new Audio(src);a.preload='none';a.addEventListener('timeupdate',function(){if(!a.duration)return;bar.style.width=((a.currentTime/a.duration)*100).toFixed(1)+'%';time.textContent=fmt(Math.max(0,a.duration-a.currentTime))});a.addEventListener('ended',stop);a.addEventListener('error',function(){time.textContent='--'})}a.play().then(function(){btn.innerHTML=PAUSE;btn.classList.add('playing');cur=a;curP=p}).catch(function(){})}btn.addEventListener('click',function(){if(a&&!a.paused)stop();else play()});if(wrap)wrap.addEventListener('click',function(e){if(!a||!a.duration)return;var r=wrap.getBoundingClientRect();a.currentTime=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*a.duration})})})();
 
 /* ═══ COUNTDOWN ═══ */
-(function(){var D=document.getElementById('cdD'),H=document.getElementById('cdH'),M=document.getElementById('cdM'),S=document.getElementById('cdS');if(!D)return;var target=new Date(2026,6,17);var pad=function(n){return String(n).padStart(2,'0')};function tick(){var diff=target-new Date();if(diff<=0){D.textContent='00';H.textContent='00';M.textContent='00';S.textContent='00';return}var s=Math.floor(diff/1000);D.textContent=Math.floor(s/86400);H.textContent=pad(Math.floor(s%86400/3600));M.textContent=pad(Math.floor(s%3600/60));S.textContent=pad(s%60)}tick();setInterval(tick,1000);
+(function(){var D=document.getElementById('cdD'),H=document.getElementById('cdH'),M=document.getElementById('cdM'),S=document.getElementById('cdS');if(!D)return;var target=new Date(2027,6,17);var pad=function(n){return String(n).padStart(2,'0')};function tick(){var diff=target-new Date();if(diff<=0){D.textContent='00';H.textContent='00';M.textContent='00';S.textContent='00';return}var s=Math.floor(diff/1000);D.textContent=Math.floor(s/86400);H.textContent=pad(Math.floor(s%86400/3600));M.textContent=pad(Math.floor(s%3600/60));S.textContent=pad(s%60)}tick();setInterval(tick,1000);
 /* blur reveal: starts at 18px, reaches 0 on release day */
 var totalDays=120;/* rough window — adjust as needed */
 var daysLeft=Math.max(0,Math.floor((target-new Date())/864e5));
@@ -803,221 +504,11 @@ try{var sp=new URLSearchParams(location.search);if(sp.get('support')==='success'
 if('serviceWorker' in navigator)window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})});
 
 
-/* ═══ VAULT ═══ */
-(function(){
-var CODE='FREETAE';
-var LEN=CODE.length;
-var wrap=document.getElementById('vaultInputWrap');
-var input=document.getElementById('vaultInput');
-var submitBtn=document.getElementById('vaultSubmit');
-var msg=document.getElementById('vaultMsg');
-var section=document.getElementById('vault');
-if(!wrap)return;
-
-var val=[];
-/* build character boxes */
-for(var i=0;i<LEN;i++){var d=document.createElement('div');d.className='vault-char';wrap.appendChild(d)}
-var chars=Array.from(wrap.querySelectorAll('.vault-char'));
-if(chars.length)chars[0].classList.add('active');
-
-/* hide the old input completely */
-if(input)input.style.display='none';
-
-/* create a real text input that sits behind the boxes */
-var realInput=document.createElement('input');
-realInput.type='text';
-realInput.maxLength=LEN;
-realInput.autocomplete='off';
-realInput.autocorrect='off';
-realInput.autocapitalize='characters';
-realInput.spellcheck=false;
-realInput.setAttribute('inputmode','text');
-realInput.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%;opacity:0;font-size:16px;z-index:5;';
-wrap.style.position='relative';
-wrap.appendChild(realInput);
-
-function updateDisplay(){
-var v=realInput.value.toUpperCase().replace(/[^A-Z0-9]/g,'');
-if(v.length>LEN)v=v.slice(0,LEN);
-realInput.value=v;
-val=v.split('');
-for(var i=0;i<LEN;i++){
-chars[i].textContent=val[i]||'';
-chars[i].classList.toggle('filled',i<val.length);
-chars[i].classList.toggle('active',i===val.length&&val.length<LEN);
-}
-msg.textContent='';msg.className='vault-msg';
-}
-
-realInput.addEventListener('input',updateDisplay);
-realInput.addEventListener('keydown',function(e){if(e.key==='Enter')tryUnlock()});
-wrap.addEventListener('click',function(){realInput.focus()});
-
-if(submitBtn)submitBtn.addEventListener('click',tryUnlock);
-
-function tryUnlock(){
-var v=realInput.value.toUpperCase().replace(/[^A-Z0-9]/g,'');
-if(v.length<LEN){
-msg.textContent='Enter all '+LEN+' characters';
-msg.className='vault-msg denied';
-msg.style.animation='none';void msg.offsetWidth;msg.style.animation='';
-return;
-}
-if(v===CODE.toUpperCase()){
-msg.textContent='Unlocked';
-fetch('https://api.freetae.com/api/vault-unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ts:Date.now()})}).catch(function(){});
-msg.className='vault-msg granted';
-if(section)section.classList.add('vault-unlocked');
-var lockEl=document.querySelector('.vault-lock');
-if(lockEl)lockEl.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 5-5 5 5 0 0 1 5 5"/></svg>';
-realInput.disabled=true;
-if(submitBtn)submitBtn.style.display='none';
-try{sessionStorage.setItem('vault','1')}catch(e){}
-}else{
-msg.textContent='Access denied';
-msg.className='vault-msg denied';
-msg.style.animation='none';void msg.offsetWidth;msg.style.animation='';
-wrap.style.animation='vaultShake .5s ease';
-setTimeout(function(){wrap.style.animation=''},600);
-setTimeout(function(){
-realInput.value='';
-updateDisplay();
-realInput.focus();
-},800);
-}
-}
-
-/* restore session */
-try{if(sessionStorage.getItem('vault')==='1'){
-realInput.value=CODE;
-updateDisplay();
-msg.textContent='Unlocked';msg.className='vault-msg granted';
-if(section)section.classList.add('vault-unlocked');
-var lockEl2=document.querySelector('.vault-lock');
-if(lockEl2)lockEl2.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 5-5 5 5 0 0 1 5 5"/></svg>';
-realInput.disabled=true;if(submitBtn)submitBtn.style.display='none';
-}}catch(e){}
-})();
-
-// Timeline scroll animation
-(function(){
-  var tlItems = document.querySelectorAll('.tl-item');
-  if (!tlItems.length) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    tlItems.forEach(function(el){ el.classList.add('tl-in'); });
-    return;
-  }
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){e.target.classList.add('tl-in');io.unobserve(e.target);}
-    });
-  },{threshold:0.15});
-  tlItems.forEach(function(el){io.observe(el);});
-})();
-
 /* ═══ HERO MOUSE GLOW ═══ */
 (function(){var hero=document.querySelector('.hero');if(!hero||'ontouchstart' in window)return;hero.addEventListener('mousemove',function(e){var r=hero.getBoundingClientRect();var x=((e.clientX-r.left)/r.width*100).toFixed(1);var y=((e.clientY-r.top)/r.height*100).toFixed(1);hero.style.setProperty('--mx',x+'%');hero.style.setProperty('--my',y+'%')})})();
 
 
 
-
-
-/* ═══ LEDGER ═══ */
-/* ═══ LEDGER ═══ */
-(function(){
-var totalEl=document.getElementById('ledgerTotal');
-var fillEl=document.getElementById('ledgerFill');
-var recentEl=document.getElementById('ledgerRecent');
-if(!totalEl||!fillEl) return;
-
-var fallback={total:114,goal:10000,supporters:[
-{name:'Eddie Acosta',amount:1,initial:'E'},
-{name:'Anonymous',amount:5,initial:'A'},
-{name:'Ree',amount:8,initial:'R'},
-{name:'Jay from Chi',amount:10,initial:'J'},
-{name:'Marcus T.',amount:15,initial:'M'},
-{name:'Kenji',amount:50,initial:'K'},
-{name:'Anonymous',amount:25,initial:'A'}
-]};
-
-function render(data){
-  var amount=data.total||0;
-  var goal=data.goal||10000;
-  var pct=Math.min(100,(amount/goal*100)).toFixed(1);
-  var cur=0;var step=Math.max(1,Math.floor(amount/40));
-  function tick(){cur=Math.min(cur+step,amount);totalEl.textContent='$'+cur.toLocaleString();if(cur<amount)requestAnimationFrame(tick)}
-  var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){tick();fillEl.style.width=pct+'%';io.disconnect()}},{threshold:.3});
-  io.observe(totalEl);
-  if(recentEl&&data.supporters){
-    recentEl.innerHTML='';
-    data.supporters.forEach(function(s){
-      var d=document.createElement('div');d.className='ledger-entry';
-      d.innerHTML='<div class="ledger-avatar">'+s.initial+'</div><div class="ledger-name">'+s.name+'</div><div class="ledger-amt">$'+s.amount+'</div>';
-      recentEl.appendChild(d);
-    });
-  }
-}
-
-fetch('https://api.freetae.com/api/ledger').then(function(r){return r.json()}).then(render).catch(function(){render(fallback)});
-})();
-
-
-
-
-
-
-
-
-
-
-
-/* ═══ VAULT AUDIO PLAYER ═══ */
-(function(){
-var audio = document.getElementById('vaultAudio');
-var btn = document.getElementById('vaultPlayBtn');
-var bar = document.getElementById('vaultProgressBar');
-var wrap = document.getElementById('vaultProgressWrap');
-var timeEl = document.getElementById('vaultTime');
-if(!audio || !btn) return;
-
-var playSVG = '<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><polygon points="6,3 20,12 6,21"/></svg>';
-var pauseSVG = '<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>';
-
-btn.addEventListener('click', function(){
-  if(audio.paused){
-    audio.play();
-    btn.innerHTML = pauseSVG;
-    btn.classList.add('playing');
-  } else {
-    audio.pause();
-    btn.innerHTML = playSVG;
-    btn.classList.remove('playing');
-  }
-});
-
-audio.addEventListener('timeupdate', function(){
-  if(audio.duration){
-    bar.style.width = (audio.currentTime / audio.duration * 100) + '%';
-    var s = Math.floor(audio.currentTime);
-    timeEl.textContent = Math.floor(s/60) + ':' + ('0' + (s%60)).slice(-2);
-  }
-});
-
-audio.addEventListener('ended', function(){
-  btn.innerHTML = playSVG;
-  btn.classList.remove('playing');
-  bar.style.width = '0%';
-  timeEl.textContent = '0:00';
-});
-
-wrap.addEventListener('click', function(e){
-  if(audio.duration){
-    var rect = wrap.getBoundingClientRect();
-    var pct = (e.clientX - rect.left) / rect.width;
-    audio.currentTime = pct * audio.duration;
-  }
-});
-})();
 
 
 /* ═══ PERFORMANCE: lazy-load video ═══ */
@@ -1043,339 +534,10 @@ videos.forEach(function(v){io.observe(v);});
 })();
 
 
-/* ═══ GALLERY + LIGHTBOX ═══ */
-(function(){
-var lb=document.getElementById('tlLightbox');
-var lbImg=document.getElementById('tlLightboxImg');
-var lbClose=document.getElementById('tlLightboxClose');
-
-function openLB(src,alt){
-  if(!lb||!lbImg)return;
-  lbImg.src=src;lbImg.alt=alt||'';
-  lb.classList.add('active');
-  document.body.style.overflow='hidden';
-}
-function closeLB(){
-  if(!lb)return;
-  lb.classList.remove('active');
-  document.body.style.overflow='';
-}
-if(lbClose)lbClose.addEventListener('click',closeLB);
-if(lb)lb.addEventListener('click',function(e){if(e.target===lb)closeLB()});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB()});
-
-// Setup each tl-content section independently
-document.querySelectorAll('.tl-content').forEach(function(content){
-  var gallery=content.querySelector('.tl-gallery');
-  if(!gallery)return;
-  
-  var video=content.querySelector('video');
-  var mainImg=content.querySelector('img.tl-img');
-  var hasVideo=!!video;
-  
-  // Store original sources for all thumbs
-  var thumbs=gallery.querySelectorAll('.tl-thumb');
-  var originalThumbs=[];
-  thumbs.forEach(function(t){originalThumbs.push({src:t.src,alt:t.alt})});
-  
-  // For video sections: create a hidden placeholder img to swap into
-  if(hasVideo&&!mainImg){
-    mainImg=document.createElement('img');
-    mainImg.className='tl-img';
-    mainImg.style.display='none';
-    mainImg.style.cursor='pointer';
-    video.parentNode.insertBefore(mainImg,video.nextSibling);
-    
-    // Click the swapped-in main image to open lightbox
-    mainImg.addEventListener('click',function(){
-      if(mainImg.style.display!=='none') openLB(mainImg.src,mainImg.alt);
-    });
-  }
-  
-  // Click main image (non-video sections) to open lightbox
-  if(mainImg&&!hasVideo){
-    mainImg.addEventListener('click',function(){
-      if(!mainImg.classList.contains('tl-blurred')) openLB(mainImg.src,mainImg.alt);
-    });
-  }
-  
-  // Click any thumb
-  thumbs.forEach(function(thumb,i){
-    thumb.addEventListener('click',function(){
-      if(hasVideo){
-        // VIDEO SECTION LOGIC
-        if(video.style.display!=='none'){
-          // Video is showing — hide video, show this thumb's image as main
-          video.style.display='none';
-          video.pause();
-          mainImg.src=thumb.src;
-          mainImg.alt=thumb.alt;
-          mainImg.style.display='';
-          // Replace this thumb with a "video" indicator using poster
-          thumb.src=video.poster||'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72"><rect fill="%23111" width="72" height="72" rx="8"/><polygon points="28,20 52,36 28,52" fill="%23FF6B00"/></svg>';
-          thumb.alt='Play video';
-          thumb.dataset.wasIndex=i;
-          thumb.dataset.showingVideo='true';
-        } else if(thumb.dataset.showingVideo==='true'){
-          // This thumb is the video placeholder — restore video
-          video.style.display='';
-          video.play().catch(function(){});
-          mainImg.style.display='none';
-          // Restore this thumb to its original image
-          thumb.src=originalThumbs[i].src;
-          thumb.alt=originalThumbs[i].alt;
-          thumb.dataset.showingVideo='';
-        } else {
-          // Another thumb clicked while image is main — just swap the main image
-          // First find which thumb has the video placeholder and restore the old image to it
-          var currentMainSrc=mainImg.src;
-          var currentMainAlt=mainImg.alt;
-          mainImg.src=thumb.src;
-          mainImg.alt=thumb.alt;
-          thumb.src=currentMainSrc;
-          thumb.alt=currentMainAlt;
-        }
-      } else {
-        // NORMAL IMAGE SECTION — simple swap
-        var tSrc=thumb.src;
-        var tAlt=thumb.alt;
-        thumb.src=mainImg.src;
-        thumb.alt=mainImg.alt;
-        mainImg.style.opacity='0';
-        setTimeout(function(){
-          mainImg.src=tSrc;
-          mainImg.alt=tAlt;
-          mainImg.style.opacity='1';
-        },150);
-      }
-    });
-  });
-});
-})();
-
-
 /* ═══ PAGEVIEW TRACKING ═══ */
 (function(){
 fetch('https://api.freetae.com/api/pageview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:location.pathname})}).catch(function(){});
 })();
-
-
-/* ═══ SOCIAL PROOF ═══ */
-(function(){
-fetch('https://api.freetae.com/api/social-proof').then(function(r){return r.json()}).then(function(d){
-  var el=document.getElementById('vaultProof');
-  if(el&&d.vault_unlocks>0){
-    el.textContent=d.vault_unlocks+' '+(d.vault_unlocks===1?'person has':'people have')+' unlocked the vault';
-    el.style.display='block';
-  }
-}).catch(function(){});
-})();
-
-
-/* ═══ VAULT SHARE ═══ */
-(function(){
-var shareBtn=document.getElementById('vaultShare');
-if(!shareBtn)return;
-
-function generateShareImage(){
-  return new Promise(function(resolve){
-    var c=document.createElement('canvas');
-    c.width=1080;c.height=1920;
-    var ctx=c.getContext('2d');
-    
-    // Background — dark gradient matching site
-    var bg=ctx.createRadialGradient(540,960,0,540,960,1100);
-    bg.addColorStop(0,'#1a0800');
-    bg.addColorStop(0.5,'#0a0400');
-    bg.addColorStop(1,'#000000');
-    ctx.fillStyle=bg;
-    ctx.fillRect(0,0,1080,1920);
-    
-    // Subtle orange glow
-    var glow=ctx.createRadialGradient(540,960,0,540,960,800);
-    glow.addColorStop(0,'rgba(255,107,0,0.18)');
-    glow.addColorStop(1,'rgba(255,107,0,0)');
-    ctx.fillStyle=glow;
-    ctx.fillRect(0,0,1080,1920);
-    
-    // Vault lock icon
-    ctx.save();
-    ctx.translate(540,680);
-    ctx.strokeStyle='rgba(255,215,0,0.6)';
-    ctx.lineWidth=8;
-    ctx.beginPath();
-    ctx.arc(0,-50,55,Math.PI,0);
-    ctx.stroke();
-    ctx.fillStyle='rgba(255,215,0,0.15)';
-    ctx.strokeStyle='rgba(255,215,0,0.5)';
-    ctx.lineWidth=3;
-    ctx.beginPath();
-    ctx.roundRect(-60,0,120,90,16);
-    ctx.fill();ctx.stroke();
-    ctx.fillStyle='rgba(255,215,0,0.8)';
-    ctx.beginPath();
-    ctx.arc(0,35,12,0,Math.PI*2);
-    ctx.fill();
-    ctx.restore();
-    
-    // "I UNLOCKED THE VAULT"
-    ctx.textAlign='center';
-    ctx.fillStyle='rgba(255,255,255,0.35)';
-    ctx.font='600 32px Oswald, sans-serif';
-    ctx.letterSpacing='6px';
-    ctx.fillText('I UNLOCKED THE VAULT',540,870);
-    
-    // "FREETAE" — big logo
-    ctx.fillStyle='#FF6B00';
-    ctx.font='900 180px Bebas Neue, sans-serif';
-    ctx.letterSpacing='12px';
-    ctx.shadowColor='rgba(255,107,0,0.5)';
-    ctx.shadowBlur=60;
-    ctx.fillText('FREETAE',540,1060);
-    ctx.shadowBlur=0;
-    
-    // "SIGN LANGUAGE"
-    ctx.fillStyle='#FFD700';
-    ctx.font='700 56px Oswald, sans-serif';
-    ctx.letterSpacing='10px';
-    ctx.fillText('SIGN LANGUAGE',540,1160);
-    
-    // Divider line
-    ctx.strokeStyle='rgba(255,107,0,0.4)';
-    ctx.lineWidth=2;
-    ctx.beginPath();
-    ctx.moveTo(340,1220);
-    ctx.lineTo(740,1220);
-    ctx.stroke();
-    
-    // "DROPPING JULY 17, 2026"
-    ctx.fillStyle='rgba(255,255,255,0.6)';
-    ctx.font='600 34px Oswald, sans-serif';
-    ctx.letterSpacing='6px';
-    ctx.fillText('DROPPING JULY 17, 2026',540,1290);
-    
-    // "freetae.com" at bottom
-    ctx.fillStyle='rgba(255,255,255,0.3)';
-    ctx.font='600 28px Rajdhani, sans-serif';
-    ctx.letterSpacing='5px';
-    ctx.fillText('FREETAE.COM',540,1380);
-    
-    // "SWIPE UP" arrow hint at very bottom
-    ctx.fillStyle='rgba(255,215,0,0.4)';
-    ctx.font='600 22px Oswald, sans-serif';
-    ctx.letterSpacing='4px';
-    ctx.fillText('TAP TO VISIT',540,1750);
-    
-    // Small arrow
-    ctx.strokeStyle='rgba(255,215,0,0.3)';
-    ctx.lineWidth=2;
-    ctx.beginPath();
-    ctx.moveTo(520,1770);ctx.lineTo(540,1785);ctx.lineTo(560,1770);
-    ctx.stroke();
-    
-    c.toBlob(function(blob){resolve(blob)},'image/png',1);
-  });
-}
-
-shareBtn.addEventListener('click',async function(){
-  shareBtn.textContent='Creating...';
-  shareBtn.disabled=true;
-  
-  try{
-    var blob=await generateShareImage();
-    var file=new File([blob],'freetae-vault-unlocked.png',{type:'image/png'});
-    var shareText='I just unlocked the vault on freetae.com \uD83D\uDD13\uD83D\uDD25 SIGN LANGUAGE dropping July 17, 2026';
-    var shareUrl='https://freetae.com';
-    
-    // Try native share with image (works on mobile)
-    if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-      await navigator.share({
-        title:'FREETAE - Vault Unlocked',
-        text:shareText,
-        url:shareUrl,
-        files:[file]
-      });
-      shareBtn.textContent='Shared \u2714';
-    }else{
-      // Fallback: download image + copy link
-      var a=document.createElement('a');
-      a.href=URL.createObjectURL(blob);
-      a.download='freetae-vault-unlocked.png';
-      a.click();
-      URL.revokeObjectURL(a.href);
-      
-      try{
-        await navigator.clipboard.writeText(shareText+' '+shareUrl);
-        shareBtn.textContent='Saved + Link Copied \u2714';
-      }catch(e){
-        shareBtn.textContent='Image Saved \u2714';
-      }
-    }
-  }catch(e){
-    // If share was cancelled or failed
-    if(e.name!=='AbortError'){
-      shareBtn.textContent='Try Again';
-    }else{
-      shareBtn.textContent='Share This';
-    }
-  }
-  
-  shareBtn.disabled=false;
-  setTimeout(function(){shareBtn.textContent='Share This'},3000);
-});
-})();
-
-
-/* ═══ LETTERS TO TAE (server-side) ═══ */
-(function(){
-var wall=document.getElementById('lettersWall');
-var nameI=document.getElementById('letterName');
-var msgI=document.getElementById('letterMsg');
-var sendBtn=document.getElementById('letterSend');
-var toast=document.getElementById('letterToast');
-if(!wall||!sendBtn)return;
-
-function escHtml(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
-function addCard(msg,from){
-  var d=document.createElement('div');d.className='letter-card';
-  d.innerHTML='<div class="letter-msg">\u201c'+escHtml(msg)+'\u201d</div><div class="letter-from">\u2014 '+(from?escHtml(from):'Anonymous')+'</div>';
-  wall.insertBefore(d,wall.firstChild);
-  d.style.opacity='0';d.style.transform='translateY(8px)';
-  requestAnimationFrame(function(){d.style.transition='opacity .5s,transform .5s';d.style.opacity='1';d.style.transform='none'});
-}
-
-// Load approved letters from API
-fetch('https://api.freetae.com/api/letters').then(function(r){return r.json()}).then(function(letters){
-  letters.forEach(function(l){addCard(l.message,l.name)});
-}).catch(function(){
-  // Fallback: load from localStorage
-  try{var saved=JSON.parse(localStorage.getItem('tae_letters')||'[]');saved.forEach(function(l){addCard(l.msg,l.from)})}catch(e){}
-});
-
-sendBtn.addEventListener('click',function(){
-  var msg=msgI.value.trim();
-  if(!msg){msgI.style.borderColor='rgba(255,68,68,.4)';setTimeout(function(){msgI.style.borderColor=''},1500);return}
-  var from=nameI.value.trim()||'Anonymous';
-  
-  // Submit to API
-  fetch('https://api.freetae.com/api/letters',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({name:from,message:msg})
-  }).catch(function(){});
-  
-  // Also save locally
-  try{var saved=JSON.parse(localStorage.getItem('tae_letters')||'[]');saved.unshift({msg:msg,from:from});if(saved.length>50)saved=saved.slice(0,50);localStorage.setItem('tae_letters',JSON.stringify(saved))}catch(e){}
-  
-  addCard(msg,from);
-  msgI.value='';nameI.value='';
-  if(toast){toast.textContent='Letter sent \u2714';setTimeout(function(){toast.textContent=''},2500)}
-  sendBtn.disabled=true;setTimeout(function(){sendBtn.disabled=false},3000);
-});
-})();
-
-
-
 
 
 /* ═══ EASTER EGG: SECRET SNIPPET ═══ */
@@ -1451,6 +613,5 @@ logo.addEventListener('click',function(){
 })();
 </script>
 
-<div class="tl-lightbox" id="tlLightbox"><span class="tl-lightbox-close" id="tlLightboxClose">&times;</span><img id="tlLightboxImg" src="" alt=""/></div>
 </body>
 </html>
